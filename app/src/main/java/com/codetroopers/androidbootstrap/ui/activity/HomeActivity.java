@@ -2,6 +2,7 @@ package com.codetroopers.androidbootstrap.ui.activity;
 
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,14 +16,24 @@ public class HomeActivity extends BaseActionBarActivity {
 
     @InjectView(R.id.drawer)
     DrawerLayout drawer;
+    private ActionBarDrawerToggle drawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setActionBarIcon(R.drawable.ic_drawer);
+//        setActionBarIcon(R.drawable.abc_ic_go_search_api_mtrl_alpha);
 
         drawer.setDrawerShadow(R.drawable.drawer_shadow, Gravity.START);
         drawer.setStatusBarBackground(R.color.statusBarTransparentColor);
+
+        drawerToggle = new ActionBarDrawerToggle(this, drawer, getToolbar(), R.string.open, R.string.close);
+        drawer.setDrawerListener(drawerToggle);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
     }
 
     @Override

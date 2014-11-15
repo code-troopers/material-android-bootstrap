@@ -3,6 +3,7 @@
     package="com.codetroopers.androidbootstrap">
 
     <application
+        android:name=".core.AndroidBootstrapApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"

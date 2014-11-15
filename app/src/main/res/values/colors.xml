@@ -7,4 +7,5 @@
     <color name="colorText">#DD000000</color>
 
     <color name="windowBackgroundColor">#FAFAFA</color>
+    <color name="statusBarTransparentColor">@color/colorPrimary</color>
 </resources>

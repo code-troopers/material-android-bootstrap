@@ -24,7 +24,7 @@ public abstract class BaseActionBarActivity extends ActionBarActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 

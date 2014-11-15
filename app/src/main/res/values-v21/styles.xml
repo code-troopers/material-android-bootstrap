@@ -4,6 +4,10 @@
     <style name="AppTheme" parent="AppTheme.Base">
         <item name="android:navigationBarColor">?android:colorPrimaryDark</item>
 
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowAllowEnterTransitionOverlap">true</item>
         <item name="android:windowAllowReturnTransitionOverlap">true</item>

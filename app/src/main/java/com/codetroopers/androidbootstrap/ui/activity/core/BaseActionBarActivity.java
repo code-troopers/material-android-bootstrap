@@ -1,5 +1,6 @@
 package com.codetroopers.androidbootstrap.ui.activity.core;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +24,9 @@ public abstract class BaseActionBarActivity extends ActionBarActivity {
         ButterKnife.inject(this);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                toolbar.setElevation(getResources().getDimensionPixelSize(R.dimen.action_bar_elevation));
+            }
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }

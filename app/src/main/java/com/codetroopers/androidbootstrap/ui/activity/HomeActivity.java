@@ -21,7 +21,6 @@ public class HomeActivity extends BaseActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setActionBarIcon(R.drawable.abc_ic_go_search_api_mtrl_alpha);
 
         drawer.setDrawerShadow(R.drawable.drawer_shadow, Gravity.START);
         drawer.setStatusBarBackground(R.color.statusBarTransparentColor);

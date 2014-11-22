@@ -13,8 +13,7 @@ import butterknife.InjectView;
 
 public abstract class BaseActionBarActivity extends ActionBarActivity {
 
-    @InjectView(R.id.toolbar)
-    Toolbar toolbar;
+    @InjectView(R.id.toolbar) Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,12 +21,12 @@ public abstract class BaseActionBarActivity extends ActionBarActivity {
         setContentView(getLayoutResource());
         ((AndroidBootstrapApplication) getApplication()).inject(this);
         ButterKnife.inject(this);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (mToolbar != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                toolbar.setElevation(getResources().getDimensionPixelSize(R.dimen.action_bar_elevation));
+                mToolbar.setElevation(getResources().getDimensionPixelSize(R.dimen.action_bar_elevation));
             }
-            setSupportActionBar(toolbar);
+            setSupportActionBar(mToolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
@@ -35,10 +34,10 @@ public abstract class BaseActionBarActivity extends ActionBarActivity {
     protected abstract int getLayoutResource();
 
     protected void setActionBarIcon(int iconRes) {
-        toolbar.setNavigationIcon(iconRes);
+        mToolbar.setNavigationIcon(iconRes);
     }
 
     public Toolbar getToolbar() {
-        return toolbar;
+        return mToolbar;
     }
 }

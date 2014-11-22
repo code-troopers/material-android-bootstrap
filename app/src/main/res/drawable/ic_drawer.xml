@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval">
     <size
-        android:width="24dp"
-        android:height="24dp"></size>
+        android:width="@dimen/drawer_ic_size"
+        android:height="@dimen/drawer_ic_size"></size>
     <solid android:color="@color/colorPrimaryDark"></solid>
 </shape>

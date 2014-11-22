@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:drawableLeft="@drawable/ic_drawer"
-    android:drawablePadding="32dp"
+    android:drawablePadding="@dimen/drawer_ic_padding"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:textAppearance="?android:attr/textAppearanceListItemSmall"

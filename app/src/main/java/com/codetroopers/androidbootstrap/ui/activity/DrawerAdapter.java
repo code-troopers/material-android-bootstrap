@@ -13,15 +13,11 @@ import butterknife.InjectView;
 
 public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder> {
     private OnItemClickListener mListener;
-    private int selected;
+    private int mSelectedItem;
 
     public void setActive(int position) {
-        selected = position;
+        mSelectedItem = position;
         notifyDataSetChanged();
-    }
-
-    public interface OnItemClickListener {
-        public void onClick(View view, int position);
     }
 
     public DrawerAdapter(OnItemClickListener listener) {
@@ -37,19 +33,23 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        viewHolder.name.setText("test" + position);
+        viewHolder.name.setText("menu " + position);
         viewHolder.name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener.onClick(v, position);
             }
         });
-        viewHolder.itemView.setActivated(position == selected);
+        viewHolder.itemView.setActivated(position == mSelectedItem);
     }
 
     @Override
     public int getItemCount() {
         return 30;
+    }
+
+    public interface OnItemClickListener {
+        public void onClick(View view, int position);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

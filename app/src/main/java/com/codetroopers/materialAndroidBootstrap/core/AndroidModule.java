@@ -1,4 +1,4 @@
-package com.codetroopers.androidbootstrap.core;
+package com.codetroopers.materialAndroidBootstrap.core;
 
 import android.app.Application;
 import android.content.Context;

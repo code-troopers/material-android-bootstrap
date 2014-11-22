@@ -1,12 +1,12 @@
-package com.codetroopers.androidbootstrap.ui.activity.core;
+package com.codetroopers.materialAndroidBootstrap.ui.activity.core;
 
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 
-import com.codetroopers.androidbootstrap.R;
-import com.codetroopers.androidbootstrap.core.AndroidBootstrapApplication;
+import com.codetroopers.materialAndroidBootstrap.R;
+import com.codetroopers.materialAndroidBootstrap.core.AndroidBootstrapApplication;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;

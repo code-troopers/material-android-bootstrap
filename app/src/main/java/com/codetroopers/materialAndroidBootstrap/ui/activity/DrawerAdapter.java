@@ -1,4 +1,4 @@
-package com.codetroopers.androidbootstrap.ui.activity;
+package com.codetroopers.materialAndroidBootstrap.ui.activity;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.codetroopers.androidbootstrap.R;
+import com.codetroopers.materialAndroidBootstrap.R;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;

@@ -1,4 +1,4 @@
-package com.codetroopers.androidbootstrap.ui.activity;
+package com.codetroopers.materialAndroidBootstrap.ui.activity;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -11,8 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.codetroopers.androidbootstrap.R;
-import com.codetroopers.androidbootstrap.ui.activity.core.BaseActionBarActivity;
+import com.codetroopers.materialAndroidBootstrap.R;
+import com.codetroopers.materialAndroidBootstrap.ui.activity.core.BaseActionBarActivity;
 
 import butterknife.InjectView;
 

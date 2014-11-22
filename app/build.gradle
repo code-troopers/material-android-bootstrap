@@ -5,7 +5,7 @@ android {
     buildToolsVersion "21.1.1"
 
     defaultConfig {
-        applicationId "com.codetroopers.androidbootstrap"
+        applicationId "com.codetroopers.materialAndroidBootstrap"
         minSdkVersion 14
         targetSdkVersion 21
         versionCode 1

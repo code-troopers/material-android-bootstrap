@@ -1,4 +1,4 @@
-package com.codetroopers.androidbootstrap;
+package com.codetroopers.materialAndroidBootstrap;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

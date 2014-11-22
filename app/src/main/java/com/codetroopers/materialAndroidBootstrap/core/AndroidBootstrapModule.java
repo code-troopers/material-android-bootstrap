@@ -1,6 +1,6 @@
-package com.codetroopers.androidbootstrap.core;
+package com.codetroopers.materialAndroidBootstrap.core;
 
-import com.codetroopers.androidbootstrap.ui.activity.HomeActivity;
+import com.codetroopers.materialAndroidBootstrap.ui.activity.HomeActivity;
 
 import dagger.Module;
 

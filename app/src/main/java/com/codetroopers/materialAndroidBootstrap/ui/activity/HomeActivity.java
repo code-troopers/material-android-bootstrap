@@ -10,9 +10,13 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.codetroopers.materialAndroidBootstrap.R;
+import com.codetroopers.materialAndroidBootstrap.example.DummyContentFactory;
 import com.codetroopers.materialAndroidBootstrap.ui.activity.core.BaseActionBarActivity;
+
+import javax.inject.Inject;
 
 import butterknife.InjectView;
 
@@ -20,6 +24,13 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
 
     @InjectView(R.id.drawer) DrawerLayout mDrawer;
     @InjectView(R.id.left_drawer) RecyclerView mDrawerList;
+
+    @InjectView(R.id.content)
+    TextView tvContent;
+
+    @Inject
+    DummyContentFactory dummyContentFactory;
+
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerAdapter mAdapter;
 
@@ -28,6 +39,8 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
         super.onCreate(savedInstanceState);
 
         setupDrawer(savedInstanceState);
+
+        tvContent.setText(dummyContentFactory.getDummyContent());
     }
 
     private void setupDrawer(Bundle savedInstanceState) {

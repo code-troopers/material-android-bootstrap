@@ -2,12 +2,11 @@ package com.codetroopers.materialAndroidBootstrap.core;
 
 import android.app.Activity;
 import android.content.Context;
-import android.test.ActivityInstrumentationTestCase2;
 
 import dagger.ObjectGraph;
 
-public abstract class MockingActivityTest<T extends Activity> extends ActivityInstrumentationTestCase2<T> {
-    public MockingActivityTest(Class<T> activityClass) {
+public abstract class RobotiumMockingTest<T extends Activity> extends RobotiumTest<T> {
+    public RobotiumMockingTest(Class<T> activityClass) {
         super(activityClass);
     }
 

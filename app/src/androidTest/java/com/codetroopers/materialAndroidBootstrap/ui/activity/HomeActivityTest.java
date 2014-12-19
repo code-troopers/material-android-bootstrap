@@ -5,9 +5,10 @@ import android.content.SharedPreferences;
 import android.location.LocationManager;
 
 import com.codetroopers.materialAndroidBootstrap.core.ForApplication;
-import com.codetroopers.materialAndroidBootstrap.core.MockingActivityTest;
+import com.codetroopers.materialAndroidBootstrap.core.RobotiumMockingTest;
 import com.codetroopers.materialAndroidBootstrap.core.TestRootModule;
 import com.codetroopers.materialAndroidBootstrap.example.DummyContentFactory;
+import com.robotium.solo.Solo;
 
 import java.sql.SQLException;
 
@@ -23,7 +24,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-public class HomeActivityTest extends MockingActivityTest<HomeActivity> {
+public class HomeActivityTest extends RobotiumMockingTest<HomeActivity> {
     @Inject
     DummyContentFactory mockDummyContentFactory;
     @Inject
@@ -49,8 +50,9 @@ public class HomeActivityTest extends MockingActivityTest<HomeActivity> {
     public void testHomeActivity_example() throws SQLException {
         when(mockDummyContentFactory.getDummyContent()).thenReturn("Hello World from test!");
 
-        // start the activity...
-        getActivity();
+        final Solo solo = startActivity();
+        solo.assertCurrentActivity("Current activity must be HomeActivity", HomeActivity.class, true);
+        assertTextViewVisibleOnScreen("Hello World from test!");
 
         // we check that non mocked objects are still injectables
         assertNotNull(locationManager);

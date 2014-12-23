@@ -20,7 +20,7 @@ public abstract class RobotiumTest<T extends Activity> extends ActivityInstrumen
     protected Solo solo;
 
     public enum Direction {
-        @SuppressWarnings("UnusedDeclaration")LEFT, RIGHT
+        LEFT, RIGHT
     }
 
     public RobotiumTest(final Class<T> activityClass) {

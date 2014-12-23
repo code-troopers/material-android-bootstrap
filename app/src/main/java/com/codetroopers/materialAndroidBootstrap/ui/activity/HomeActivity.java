@@ -1,6 +1,7 @@
 package com.codetroopers.materialAndroidBootstrap.ui.activity;
 
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,19 +14,41 @@ import android.view.View;
 
 import com.codetroopers.materialAndroidBootstrap.R;
 import com.codetroopers.materialAndroidBootstrap.ui.activity.core.BaseActionBarActivity;
+import com.codetroopers.materialAndroidBootstrap.util.Ln;
+import com.codetroopers.materialAndroidBootstrap.util.Strings;
+import com.codetroopers.materialAndroidBootstrap.util.UIUtils;
 
 import butterknife.InjectView;
 
 public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter.OnItemClickListener {
 
-    @InjectView(R.id.drawer) DrawerLayout mDrawer;
-    @InjectView(R.id.left_drawer) RecyclerView mDrawerList;
+    @InjectView(R.id.drawer)
+    DrawerLayout mDrawer;
+    @InjectView(R.id.left_drawer)
+    RecyclerView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (UIUtils.isTablet(this)) {
+            Ln.d("Creating activity for a tablet context...");
+        } else {
+            Ln.d("Creating activity for a phone context...");
+        }
+        /**
+         * examples of {@link #com.codetroopers.materialAndroidBootstrap.util.Strings} utilities methods
+         */
+        Ln.d(Strings.joinAnd(", ", " and ",
+                Strings.namedFormat("Android SDK = $sdkVersion ($release)",
+                        "sdkVersion", Build.VERSION.SDK_INT,
+                        "release", Build.VERSION.RELEASE),
+                Strings.namedFormat("CODENAME = $codeName",
+                        "codeName", Build.VERSION.CODENAME),
+                Strings.namedFormat("INCREMENTAL = $incremental",
+                        "incremental", Build.VERSION.INCREMENTAL)));
 
         setupDrawer(savedInstanceState);
     }

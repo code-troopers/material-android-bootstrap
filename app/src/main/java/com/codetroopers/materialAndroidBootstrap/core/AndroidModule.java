@@ -1,8 +1,9 @@
 package com.codetroopers.materialAndroidBootstrap.core;
 
-import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.LocationManager;
+import android.preference.PreferenceManager;
 
 import javax.inject.Singleton;
 
@@ -17,12 +18,6 @@ import static android.content.Context.LOCATION_SERVICE;
  */
 @Module(library = true)
 public class AndroidModule {
-    private final Application application;
-
-    public AndroidModule(Application application) {
-        this.application = application;
-    }
-
     /**
      * Allow the application context to be injected but require that it be annotated with
      * {@link ForApplication @Annotation} to explicitly differentiate it from an activity context.
@@ -31,12 +26,17 @@ public class AndroidModule {
     @Singleton
     @ForApplication
     Context provideApplicationContext() {
-        return application;
+        return AndroidBootstrapApplication.getInstance();
     }
 
     @Provides
     @Singleton
-    LocationManager provideLocationManager() {
-        return (LocationManager) application.getSystemService(LOCATION_SERVICE);
+    LocationManager provideLocationManager(@ForApplication final Context context) {
+        return (LocationManager) context.getSystemService(LOCATION_SERVICE);
+    }
+
+    @Provides
+    SharedPreferences provideDefaultSharedPreferences(@ForApplication final Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context);
     }
 }

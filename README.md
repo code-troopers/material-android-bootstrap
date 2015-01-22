@@ -10,6 +10,7 @@ This bootstrap contains :
 * Dagger
 * ButterKnife
 * Picasso
+* Crashlytics
 
 ## Thanks
 

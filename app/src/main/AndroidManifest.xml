@@ -17,6 +17,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--Uncomment to add crashlytics-->
+        <!--<meta-data-->
+        <!--android:name="com.crashlytics.ApiKey"-->
+        <!--android:value="<YOUR_KEY>" />-->
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

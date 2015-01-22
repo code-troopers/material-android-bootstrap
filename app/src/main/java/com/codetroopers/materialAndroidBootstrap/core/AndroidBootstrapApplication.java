@@ -15,6 +15,8 @@ public class AndroidBootstrapApplication extends android.app.Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //Uncomment to add crashlytics
+        //Fabric.with(this, new Crashlytics());
         instance = this;
         Injector.init(getModules().toArray());
     }

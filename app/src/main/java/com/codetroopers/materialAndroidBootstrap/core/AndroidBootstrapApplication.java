@@ -3,16 +3,12 @@ package com.codetroopers.materialAndroidBootstrap.core;
 import android.app.Application;
 
 import com.codetroopers.materialAndroidBootstrap.BuildConfig;
-import com.codetroopers.materialAndroidBootstrap.core.components.ActivityScopeComponent;
-import com.codetroopers.materialAndroidBootstrap.core.components.DaggerActivityScopeComponent;
-import com.codetroopers.materialAndroidBootstrap.core.components.DaggerSingletonComponent;
-import com.codetroopers.materialAndroidBootstrap.core.components.SingletonComponent;
 
 import timber.log.Timber;
 
 public class AndroidBootstrapApplication extends android.app.Application {
     private static Application instance;
-    private ActivityScopeComponent component;
+    private Injector injector;
 
     public static Application getInstance() {
         return instance;
@@ -26,11 +22,11 @@ public class AndroidBootstrapApplication extends android.app.Application {
         instance = this;
 
         initLoggers();
-        initInjectors();
+        injector = createInjector();
     }
 
-    public ActivityScopeComponent injector() {
-        return component;
+    public Injector injector() {
+        return injector;
     }
 
     /**
@@ -47,10 +43,9 @@ public class AndroidBootstrapApplication extends android.app.Application {
     }
 
     /**
-     * Dagger components init
+     * Dagger component init
      */
-    private void initInjectors() {
-        final SingletonComponent singletonComponent = DaggerSingletonComponent.create();
-        component = DaggerActivityScopeComponent.builder().singletonComponent(singletonComponent).build();
+    private Injector createInjector() {
+        return DaggerInjector.create();
     }
 }

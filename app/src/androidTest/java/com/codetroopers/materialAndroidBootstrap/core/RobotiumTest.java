@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.codetroopers.materialAndroidBootstrap.util.Strings;
 import com.robotium.solo.Solo;
 
 import java.io.Serializable;
@@ -47,8 +48,7 @@ public abstract class RobotiumTest<T extends Activity> extends ActivityInstrumen
 
     protected final void assertTextViewVisibleOnScreen(final int textId) {
         final String text = solo.getString(textId);
-        // FIXME replace with a call to Strings utility class (which is not yet merged on this branch)
-        assertTrue(isNotBlank(text));
+        assertTrue(Strings.notEmpty(text));
         assertTextViewVisibleOnScreen(text);
     }
 
@@ -97,24 +97,5 @@ public abstract class RobotiumTest<T extends Activity> extends ActivityInstrumen
         i.putExtra(extraKey, serializable);
         setActivityIntent(i);
         return startActivity();
-    }
-
-    @Deprecated
-    private static boolean isNotBlank(final CharSequence cs) {
-        return !isBlank(cs);
-    }
-
-    @Deprecated
-    private static boolean isBlank(final CharSequence cs) {
-        int strLen;
-        if (cs == null || (strLen = cs.length()) == 0) {
-            return true;
-        }
-        for (int i = 0; i < strLen; i++) {
-            if (!Character.isWhitespace(cs.charAt(i))) {
-                return false;
-            }
-        }
-        return true;
     }
 }

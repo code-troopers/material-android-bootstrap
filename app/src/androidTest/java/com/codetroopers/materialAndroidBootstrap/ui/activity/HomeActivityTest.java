@@ -5,7 +5,8 @@ import android.content.SharedPreferences;
 import android.location.LocationManager;
 
 import com.codetroopers.materialAndroidBootstrap.core.RobotiumMockingTest;
-import com.codetroopers.materialAndroidBootstrap.core.TestRootModule;
+import com.codetroopers.materialAndroidBootstrap.core.modules.AndroidBootstrapModule;
+import com.codetroopers.materialAndroidBootstrap.core.modules.AndroidModule;
 import com.codetroopers.materialAndroidBootstrap.core.modules.ForApplication;
 import com.codetroopers.materialAndroidBootstrap.example.DummyContentFactory;
 import com.robotium.solo.Solo;
@@ -39,12 +40,18 @@ public class HomeActivityTest extends RobotiumMockingTest<HomeActivity> {
     @Override
     public void setUp() throws Exception {
         super.setUp();
+        mockInjector.inject(this);
         reset(mockSharedPreferences, mockDummyContentFactory);
     }
 
     @Override
-    protected Object getTestModule() {
-        return new TestModule();
+    protected AndroidModule getMockAndroidModule() {
+        return new AndroidTestModule();
+    }
+
+    @Override
+    protected AndroidBootstrapModule getMockAndroidBootstrapModule() {
+        return new AndroidBootstrapTestModule();
     }
 
     public void testHomeActivity_example() throws SQLException {
@@ -65,22 +72,21 @@ public class HomeActivityTest extends RobotiumMockingTest<HomeActivity> {
     /**
      * DAGGER injection for the mocks
      */
-    @Module(
-            includes = TestRootModule.class,
-            injects = HomeActivityTest.class,
-            overrides = true
-    )
-    static class TestModule {
-        @SuppressWarnings("UnusedParameters")
+
+    @Module
+    static class AndroidBootstrapTestModule extends AndroidBootstrapModule {
         @Provides
         @Singleton
         DummyContentFactory provideDummyContentFactory(@ForApplication final Context context) {
             return mock(DummyContentFactory.class);
         }
+    }
 
+    @Module
+    static class AndroidTestModule extends AndroidModule {
         @Provides
         @Singleton
-        SharedPreferences provideSharedPreferences() {
+        SharedPreferences provideDefaultSharedPreferences(@ForApplication Context context) {
             return mock(SharedPreferences.class);
         }
     }

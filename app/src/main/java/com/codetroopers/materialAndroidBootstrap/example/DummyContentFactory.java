@@ -3,7 +3,7 @@ package com.codetroopers.materialAndroidBootstrap.example;
 import android.content.Context;
 
 import com.codetroopers.materialAndroidBootstrap.R;
-import com.codetroopers.materialAndroidBootstrap.core.ForApplication;
+import com.codetroopers.materialAndroidBootstrap.core.modules.ForApplication;
 
 import javax.inject.Inject;
 

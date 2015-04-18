@@ -1,5 +1,8 @@
 package com.codetroopers.materialAndroidBootstrap.core;
 
+import com.codetroopers.materialAndroidBootstrap.core.modules.AndroidBootstrapModule;
+import com.codetroopers.materialAndroidBootstrap.core.modules.AndroidModule;
+
 import dagger.Module;
 
 /**

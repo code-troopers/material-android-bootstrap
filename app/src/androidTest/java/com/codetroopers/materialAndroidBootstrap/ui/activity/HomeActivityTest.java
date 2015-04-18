@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
 
-import com.codetroopers.materialAndroidBootstrap.core.ForApplication;
 import com.codetroopers.materialAndroidBootstrap.core.RobotiumMockingTest;
 import com.codetroopers.materialAndroidBootstrap.core.TestRootModule;
+import com.codetroopers.materialAndroidBootstrap.core.modules.ForApplication;
 import com.codetroopers.materialAndroidBootstrap.example.DummyContentFactory;
 import com.robotium.solo.Solo;
 

@@ -16,13 +16,13 @@ import android.widget.TextView;
 import com.codetroopers.materialAndroidBootstrap.R;
 import com.codetroopers.materialAndroidBootstrap.example.DummyContentFactory;
 import com.codetroopers.materialAndroidBootstrap.ui.activity.core.BaseActionBarActivity;
-import com.codetroopers.materialAndroidBootstrap.util.Ln;
 import com.codetroopers.materialAndroidBootstrap.util.Strings;
 import com.codetroopers.materialAndroidBootstrap.util.UIUtils;
 
 import javax.inject.Inject;
 
 import butterknife.InjectView;
+import timber.log.Timber;
 
 public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter.OnItemClickListener {
 
@@ -45,14 +45,14 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
         super.onCreate(savedInstanceState);
 
         if (UIUtils.isTablet(this)) {
-            Ln.d("Creating activity for a tablet context...");
+            Timber.d("Creating activity for a tablet context...");
         } else {
-            Ln.d("Creating activity for a phone context...");
+            Timber.d("Creating activity for a phone context...");
         }
         /**
          * examples of {@link #com.codetroopers.materialAndroidBootstrap.util.Strings} utilities methods
          */
-        Ln.d(Strings.joinAnd(", ", " and ",
+        Timber.d(Strings.joinAnd(", ", " and ",
                 Strings.namedFormat("Android SDK = $sdkVersion ($release)",
                         "sdkVersion", Build.VERSION.SDK_INT,
                         "release", Build.VERSION.RELEASE),

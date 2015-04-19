@@ -6,20 +6,19 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.codetroopers.materialAndroidBootstrap.R;
-import com.codetroopers.materialAndroidBootstrap.core.AndroidBootstrapApplication;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public abstract class BaseActionBarActivity extends ActionBarActivity {
 
-    @InjectView(R.id.toolbar) Toolbar mToolbar;
+    @InjectView(R.id.toolbar)
+    Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResource());
-        ((AndroidBootstrapApplication) getApplication()).inject(this);
         ButterKnife.inject(this);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         if (mToolbar != null) {

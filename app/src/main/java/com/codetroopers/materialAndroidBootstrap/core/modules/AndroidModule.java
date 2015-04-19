@@ -1,9 +1,11 @@
-package com.codetroopers.materialAndroidBootstrap.core;
+package com.codetroopers.materialAndroidBootstrap.core.modules;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.preference.PreferenceManager;
+
+import com.codetroopers.materialAndroidBootstrap.core.AndroidBootstrapApplication;
 
 import javax.inject.Singleton;
 
@@ -16,7 +18,7 @@ import static android.content.Context.LOCATION_SERVICE;
  * A module for Android-specific dependencies which require a {@link Context} or
  * {@link android.app.Application} to create.
  */
-@Module(library = true)
+@Module
 public class AndroidModule {
     /**
      * Allow the application context to be injected but require that it be annotated with

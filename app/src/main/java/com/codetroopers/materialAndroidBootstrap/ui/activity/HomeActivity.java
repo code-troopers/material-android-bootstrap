@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.codetroopers.materialAndroidBootstrap.R;
+import com.codetroopers.materialAndroidBootstrap.core.AndroidBootstrapApplication;
 import com.codetroopers.materialAndroidBootstrap.example.DummyContentFactory;
 import com.codetroopers.materialAndroidBootstrap.ui.activity.core.BaseActionBarActivity;
 import com.codetroopers.materialAndroidBootstrap.util.Strings;
@@ -43,6 +44,8 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ((AndroidBootstrapApplication) getApplication()).injector().inject(this);
 
         if (UIUtils.isTablet(this)) {
             Timber.d("Creating activity for a tablet context...");

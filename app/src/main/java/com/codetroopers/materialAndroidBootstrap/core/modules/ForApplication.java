@@ -1,4 +1,4 @@
-package com.codetroopers.materialAndroidBootstrap.core;
+package com.codetroopers.materialAndroidBootstrap.core.modules;
 
 import java.lang.annotation.Retention;
 

@@ -2,7 +2,7 @@ package com.codetroopers.materialAndroidBootstrap.core;
 
 import com.codetroopers.materialAndroidBootstrap.core.modules.AndroidBootstrapModule;
 import com.codetroopers.materialAndroidBootstrap.core.modules.AndroidModule;
-import com.codetroopers.materialAndroidBootstrap.ui.activity.HomeActivity;
+import com.codetroopers.materialAndroidBootstrap.ui.activity.HomeActivityTest;
 
 import javax.inject.Singleton;
 
@@ -15,6 +15,6 @@ import dagger.Component;
                 AndroidBootstrapModule.class
         }
 )
-public interface Injector {
-    void inject(HomeActivity activity);
+public interface MockInjector extends Injector {
+    void inject(HomeActivityTest activity);
 }

@@ -11,6 +11,8 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.codetroopers.materialAndroidBootstrap.R;
@@ -23,6 +25,8 @@ import com.codetroopers.materialAndroidBootstrap.util.UIUtils;
 import javax.inject.Inject;
 
 import butterknife.InjectView;
+import butterknife.OnClick;
+import butterknife.OnItemSelected;
 import timber.log.Timber;
 
 public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter.OnItemClickListener {
@@ -147,6 +151,23 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
     @Override
     public void onClick(View view, int position) {
         selectItem(position);
+    }
+
+    @OnClick(R.id.content)
+    public void sayHi(TextView textView) {
+        textView.setText("Hello!");
+    }
+
+    @OnItemSelected(R.id.list_contact)
+    void onItemSelected(int position) {
+        // TODO ...
+        ListView listView = new ListView(this);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
     }
 
     private void selectItem(int position) {

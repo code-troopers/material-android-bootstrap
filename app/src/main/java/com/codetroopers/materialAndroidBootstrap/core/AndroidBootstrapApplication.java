@@ -1,12 +1,13 @@
 package com.codetroopers.materialAndroidBootstrap.core;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.codetroopers.materialAndroidBootstrap.BuildConfig;
 
 import timber.log.Timber;
 
-public class AndroidBootstrapApplication extends android.app.Application {
+public class AndroidBootstrapApplication extends Application {
     private static Application instance;
     private Injector injector;
 
@@ -35,11 +36,17 @@ public class AndroidBootstrapApplication extends android.app.Application {
     private void initLoggers() {
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
-        } /** else {
-         // A tree which logs important information for crash reporting
-         // custom implementations can be inserted by extending HollowTree
-         Timber.plant(new Timber.HollowTree() {...});
-         } **/
+        } else {
+            // only log INFO+ with no tag tracing the calling class
+            Timber.plant(new Timber.Tree() {
+                @Override
+                protected void log(int priority, String tag, String message, Throwable t) {
+                    if (priority != Log.VERBOSE && priority != Log.DEBUG) {
+                        Log.println(priority, tag, message);
+                    }
+                }
+            });
+        }
     }
 
     /**

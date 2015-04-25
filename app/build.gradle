@@ -36,8 +36,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:6.0.0'
     compile 'com.squareup.picasso:picasso:2.4.0'
     compile 'com.google.dagger:dagger:2.0'
-
-    compile 'com.jakewharton.timber:timber:2.7.1'
+    compile 'com.jakewharton.timber:timber:3.0.1'
 
     // tests
     androidTestCompile 'org.mockito:mockito-core:1.9.5'

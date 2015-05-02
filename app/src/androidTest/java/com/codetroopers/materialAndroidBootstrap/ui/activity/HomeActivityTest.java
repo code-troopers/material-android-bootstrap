@@ -65,8 +65,7 @@ public class HomeActivityTest extends RobotiumMockingTest<HomeActivity> {
         assertNotNull(locationManager);
 
         verify(mockDummyContentFactory).getDummyContent();
-        verifyNoMoreInteractions(mockDummyContentFactory);
-        verifyNoMoreInteractions(mockSharedPreferences);
+        verifyNoMoreInteractions(mockDummyContentFactory, mockSharedPreferences);
     }
 
     /**

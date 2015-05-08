@@ -32,7 +32,6 @@ import timber.log.Timber;
  *
  * @param <ResultT>
  */
-@SuppressWarnings("UnusedDeclaration")
 public abstract class SafeAsyncTask<ResultT> implements Callable<ResultT> {
     public static final int DEFAULT_POOL_SIZE = 25;
     protected static final Executor DEFAULT_EXECUTOR = Executors.newFixedThreadPool(DEFAULT_POOL_SIZE);
@@ -47,7 +46,7 @@ public abstract class SafeAsyncTask<ResultT> implements Callable<ResultT> {
      * Sets executor to Executors.newFixedThreadPool(DEFAULT_POOL_SIZE) and
      * Handler to new Handler()
      */
-    public SafeAsyncTask() {
+    public  SafeAsyncTask() {
         this.executor = DEFAULT_EXECUTOR;
     }
 
@@ -73,7 +72,7 @@ public abstract class SafeAsyncTask<ResultT> implements Callable<ResultT> {
 
 
     public FutureTask<Void> future() {
-        future = new FutureTask<>(newTask());
+        future = new FutureTask<Void>(newTask());
         return future;
     }
 
@@ -115,7 +114,6 @@ public abstract class SafeAsyncTask<ResultT> implements Callable<ResultT> {
     /**
      * @throws Exception, captured on passed to onException() if present.
      */
-    @SuppressWarnings("EmptyMethod")
     protected void onPreExecute() throws Exception {
     }
 
@@ -123,7 +121,7 @@ public abstract class SafeAsyncTask<ResultT> implements Callable<ResultT> {
      * @param t the result of {@link #call()}
      * @throws Exception, captured on passed to onException() if present.
      */
-    @SuppressWarnings({"UnusedDeclaration", "EmptyMethod"})
+    @SuppressWarnings({"UnusedDeclaration"})
     protected void onSuccess(ResultT t) throws Exception {
     }
 
@@ -159,13 +157,12 @@ public abstract class SafeAsyncTask<ResultT> implements Callable<ResultT> {
     /**
      * @throws RuntimeException, ignored
      */
-    @SuppressWarnings("EmptyMethod")
     protected void onFinally() throws RuntimeException {
     }
 
 
     protected Task<ResultT> newTask() {
-        return new Task<>(this);
+        return new Task<ResultT>(this);
     }
 
 
@@ -188,7 +185,7 @@ public abstract class SafeAsyncTask<ResultT> implements Callable<ResultT> {
                     doException(e);
                 } catch (Exception f) {
                     // logged but ignored
-                    Timber.e(f, "");
+                    Timber.e(f, f.getMessage());
                 }
 
             } catch (final Throwable t) {
@@ -196,7 +193,7 @@ public abstract class SafeAsyncTask<ResultT> implements Callable<ResultT> {
                     doThrowable(t);
                 } catch (Exception f) {
                     // logged but ignored
-                    Timber.e(f, "");
+                    Timber.e(f, f.getMessage());
                 }
             } finally {
                 doFinally();
@@ -229,7 +226,7 @@ public abstract class SafeAsyncTask<ResultT> implements Callable<ResultT> {
 
         protected void doException(final Exception e) throws Exception {
             if (parent.launchLocation != null) {
-                final ArrayList<StackTraceElement> stack = new ArrayList<>(Arrays.asList(e.getStackTrace()));
+                final ArrayList<StackTraceElement> stack = new ArrayList<StackTraceElement>(Arrays.asList(e.getStackTrace()));
                 stack.addAll(Arrays.asList(parent.launchLocation));
                 e.setStackTrace(stack.toArray(new StackTraceElement[stack.size()]));
             }
@@ -246,7 +243,7 @@ public abstract class SafeAsyncTask<ResultT> implements Callable<ResultT> {
 
         protected void doThrowable(final Throwable e) throws Exception {
             if (parent.launchLocation != null) {
-                final ArrayList<StackTraceElement> stack = new ArrayList<>(Arrays.asList(e.getStackTrace()));
+                final ArrayList<StackTraceElement> stack = new ArrayList<StackTraceElement>(Arrays.asList(e.getStackTrace()));
                 stack.addAll(Arrays.asList(parent.launchLocation));
                 e.setStackTrace(stack.toArray(new StackTraceElement[stack.size()]));
             }

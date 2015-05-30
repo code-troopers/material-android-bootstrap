@@ -3,10 +3,9 @@ package com.codetroopers.materialAndroidBootstrap.ui.activity;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,12 +24,12 @@ import javax.inject.Inject;
 import butterknife.InjectView;
 import timber.log.Timber;
 
-public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter.OnItemClickListener {
+public class HomeActivity extends BaseActionBarActivity {
 
     @InjectView(R.id.drawer)
     DrawerLayout mDrawer;
-    @InjectView(R.id.left_drawer)
-    RecyclerView mDrawerList;
+    @InjectView(R.id.navigation_view)
+    NavigationView mNavigationView;
 
     @InjectView(R.id.content)
     TextView tvContent;
@@ -39,7 +38,6 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
     DummyContentFactory dummyContentFactory;
 
     private ActionBarDrawerToggle mDrawerToggle;
-    private DrawerAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,20 +62,11 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
                 Strings.namedFormat("INCREMENTAL = $incremental",
                         "incremental", Build.VERSION.INCREMENTAL)));
 
-        setupDrawer(savedInstanceState);
-
+        setupDrawer();
         tvContent.setText(dummyContentFactory.getDummyContent());
     }
 
-    private void setupDrawer(Bundle savedInstanceState) {
-        mAdapter = new DrawerAdapter(this);
-
-        mDrawerList.setAdapter(mAdapter);
-        // improve performance by indicating the list if fixed size.
-        mDrawerList.setHasFixedSize(true);
-        mDrawerList.setLayoutManager(new LinearLayoutManager(this));
-        mDrawer.setDrawerShadow(R.drawable.drawer_shadow, Gravity.START);
-        mDrawer.setStatusBarBackground(R.color.statusBarTransparentColor);
+    private void setupDrawer() {
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, getToolbar(), R.string.drawer_open, R.string.drawer_close) {
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -92,9 +81,6 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
             }
         };
         mDrawer.setDrawerListener(mDrawerToggle);
-        if (savedInstanceState == null) {
-            selectItem(0);
-        }
     }
 
     @Override
@@ -124,7 +110,7 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
-        boolean drawerOpen = mDrawer.isDrawerOpen(mDrawerList);
+        boolean drawerOpen = mDrawer.isDrawerOpen(mNavigationView);
         menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
@@ -142,15 +128,5 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onClick(View view, int position) {
-        selectItem(position);
-    }
-
-    private void selectItem(int position) {
-        mDrawer.closeDrawer(mDrawerList);
-        mAdapter.setActive(position);
     }
 }

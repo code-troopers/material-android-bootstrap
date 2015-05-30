@@ -4,15 +4,15 @@ apply plugin: 'com.neenbedankt.android-apt'
 //apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
         applicationId "com.codetroopers.materialAndroidBootstrap"
         minSdkVersion 14
-        targetSdkVersion 21
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 22
+        versionCode 2
+        versionName "1.1"
     }
     buildTypes {
         release {
@@ -31,25 +31,25 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    compile 'com.android.support:recyclerview-v7:21.0.0'
-    compile 'com.jakewharton:butterknife:6.0.0'
-    compile 'com.squareup.picasso:picasso:2.4.0'
-    compile 'com.google.dagger:dagger:2.0'
-    compile 'com.jakewharton.timber:timber:3.0.2'
+    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.android.support:recyclerview-v7:22.2.0'
+    compile 'com.jakewharton:butterknife:6.1.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.google.dagger:dagger:2.0.1'
+    compile 'com.jakewharton.timber:timber:3.1.0'
 
     // tests
     androidTestCompile 'org.mockito:mockito-core:1.10.19'
     androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
     androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.2'
-    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.3.1'
+    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.4.1'
     //Uncomment to add crashlytics
     //compile('com.crashlytics.sdk.android:crashlytics:2.2.0@aar') {
     //  transitive = true;
     //}
 
-    apt "com.google.dagger:dagger-compiler:2.0"
-    androidTestApt "com.google.dagger:dagger-compiler:2.0"
+    apt "com.google.dagger:dagger-compiler:2.0.1"
+    androidTestApt "com.google.dagger:dagger-compiler:2.0.1"
 
     provided 'javax.annotation:jsr250-api:1.0'
 }

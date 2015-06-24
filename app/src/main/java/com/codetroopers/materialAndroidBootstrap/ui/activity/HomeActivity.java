@@ -15,6 +15,10 @@ import android.widget.TextView;
 
 import com.codetroopers.materialAndroidBootstrap.R;
 import com.codetroopers.materialAndroidBootstrap.core.AndroidBootstrapApplication;
+import com.codetroopers.materialAndroidBootstrap.core.HasComponent;
+import com.codetroopers.materialAndroidBootstrap.core.components.DaggerHomeActivityComponent;
+import com.codetroopers.materialAndroidBootstrap.core.components.HomeActivityComponent;
+import com.codetroopers.materialAndroidBootstrap.core.modules.HomeActivityModule;
 import com.codetroopers.materialAndroidBootstrap.example.DummyContentFactory;
 import com.codetroopers.materialAndroidBootstrap.ui.activity.core.BaseActionBarActivity;
 import com.codetroopers.materialAndroidBootstrap.util.Strings;
@@ -25,7 +29,9 @@ import javax.inject.Inject;
 import butterknife.InjectView;
 import timber.log.Timber;
 
-public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter.OnItemClickListener {
+public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter.OnItemClickListener, HasComponent<HomeActivityComponent> {
+
+    private HomeActivityComponent component;
 
     @InjectView(R.id.drawer)
     DrawerLayout mDrawer;
@@ -45,7 +51,11 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ((AndroidBootstrapApplication) getApplication()).injector().inject(this);
+        this.component = DaggerHomeActivityComponent.builder()
+                .applicationComponent(((AndroidBootstrapApplication) getApplication()).getComponent())
+                .homeActivityModule(new HomeActivityModule(this))
+                .build();
+        component.injectActivity(this);
 
         if (UIUtils.isTablet(this)) {
             Timber.d("Creating activity for a tablet context...");
@@ -147,6 +157,11 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
     @Override
     public void onClick(View view, int position) {
         selectItem(position);
+    }
+
+    @Override
+    public HomeActivityComponent getComponent() {
+        return component;
     }
 
     private void selectItem(int position) {

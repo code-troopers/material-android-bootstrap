@@ -20,11 +20,17 @@ public class AndroidBootstrapApplication extends Application implements HasCompo
         //Fabric.with(this, new Crashlytics());
 
         initLoggers();
-        applicationComponent = createInjector();
     }
 
     @Override
     public ApplicationComponent getComponent() {
+        if (applicationComponent == null) {
+            // Dagger component init
+            applicationComponent = DaggerApplicationComponent
+                    .builder()
+                    .applicationModule(new ApplicationModule(this))
+                    .build();
+        }
         return applicationComponent;
     }
 
@@ -45,14 +51,5 @@ public class AndroidBootstrapApplication extends Application implements HasCompo
                 }
             });
         }
-    }
-
-    /**
-     * Dagger component init
-     */
-    private ApplicationComponent createInjector() {
-        return DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this))
-                .build();
     }
 }

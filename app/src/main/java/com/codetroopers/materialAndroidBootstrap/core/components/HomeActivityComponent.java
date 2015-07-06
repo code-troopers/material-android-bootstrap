@@ -3,11 +3,10 @@ package com.codetroopers.materialAndroidBootstrap.core.components;
 import com.codetroopers.materialAndroidBootstrap.core.modules.HomeActivityModule;
 import com.codetroopers.materialAndroidBootstrap.ui.activity.HomeActivity;
 
-import dagger.Component;
+import dagger.Subcomponent;
 
 @ActivityScope
-@Component(
-        dependencies = ApplicationComponent.class,
+@Subcomponent(
         modules = {
                 HomeActivityModule.class
         }

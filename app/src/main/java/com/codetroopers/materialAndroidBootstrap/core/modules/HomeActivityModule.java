@@ -18,7 +18,7 @@ public class HomeActivityModule {
     }
 
     @Provides
-    Activity provideActivity() {
+    public Activity provideActivity() {
         return activity;
     }
 
@@ -26,7 +26,7 @@ public class HomeActivityModule {
 
     @ActivityScope
     @Provides
-    DummyContentFactory provideDummyContentFactory(@ForApplication Context context) {
+    public DummyContentFactory provideDummyContentFactory(@ForApplication Context context) {
         return new DummyContentFactory(context);
     }
 }

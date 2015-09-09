@@ -1,6 +1,5 @@
 package com.codetroopers.materialAndroidBootstrap.core.modules;
 
-import android.app.Application;
 import android.content.Context;
 
 import dagger.Module;
@@ -8,15 +7,10 @@ import dagger.Provides;
 
 @Module
 public class ApplicationModule {
-    private final Application application;
+    private final Context applicationContext;
 
-    public ApplicationModule(Application application) {
-        this.application = application;
-    }
-
-    @Provides
-    public Application provideApplication() {
-        return application;
+    public ApplicationModule(Context applicationContext) {
+        this.applicationContext = applicationContext;
     }
 
     /**
@@ -25,7 +19,7 @@ public class ApplicationModule {
      */
     @Provides
     @ForApplication
-    public Context provideApplicationContext() {
-        return application;
+    Context provideApplicationContext() {
+        return applicationContext;
     }
 }

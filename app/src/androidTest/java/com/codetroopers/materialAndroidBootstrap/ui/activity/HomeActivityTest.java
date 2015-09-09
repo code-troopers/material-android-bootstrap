@@ -1,40 +1,33 @@
 package com.codetroopers.materialAndroidBootstrap.ui.activity;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.location.LocationManager;
+import android.support.annotation.NonNull;
 
 import com.codetroopers.materialAndroidBootstrap.core.RobotiumMockingTest;
-import com.codetroopers.materialAndroidBootstrap.core.components.DaggerMockApplicationComponent;
-import com.codetroopers.materialAndroidBootstrap.core.components.MockHomeActivityComponent;
+import com.codetroopers.materialAndroidBootstrap.core.components.ApplicationComponent;
+import com.codetroopers.materialAndroidBootstrap.core.components.ComponentsFactory;
+import com.codetroopers.materialAndroidBootstrap.core.components.DaggerApplicationComponent;
+import com.codetroopers.materialAndroidBootstrap.core.components.HomeActivityComponent;
 import com.codetroopers.materialAndroidBootstrap.core.modules.AndroidModule;
 import com.codetroopers.materialAndroidBootstrap.core.modules.ApplicationModule;
+import com.codetroopers.materialAndroidBootstrap.core.modules.ForApplication;
 import com.codetroopers.materialAndroidBootstrap.core.modules.HomeActivityModule;
 import com.codetroopers.materialAndroidBootstrap.example.DummyContentFactory;
 import com.robotium.solo.Solo;
 
-import org.mockito.Matchers;
-import org.mockito.Mockito;
-import org.mockito.internal.util.reflection.Whitebox;
-
 import java.sql.SQLException;
 
-import javax.inject.Inject;
+import dagger.Module;
 
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 public class HomeActivityTest extends RobotiumMockingTest<HomeActivity> {
-    @Inject
+
     DummyContentFactory mockDummyContentFactory;
-    @Inject
-    SharedPreferences mockSharedPreferences;
-    @Inject
-    LocationManager locationManager;
 
     public HomeActivityTest() {
         super(HomeActivity.class);
@@ -43,31 +36,8 @@ public class HomeActivityTest extends RobotiumMockingTest<HomeActivity> {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-
-        final HomeActivity activity = getActivity();
-
-        final AndroidModule mockAndroidModule = Mockito.spy(new AndroidModule());
-        doReturn(mock(SharedPreferences.class))
-                .when(mockAndroidModule)
-                .provideDefaultSharedPreferences(Matchers.<Context>anyObject());
-
-        final HomeActivityModule mockHomeActivityModule = Mockito.spy(new HomeActivityModule(activity));
-        doReturn(mock(DummyContentFactory.class))
-                .when(mockHomeActivityModule)
-                .provideDummyContentFactory(Matchers.<Context>anyObject());
-
-        final MockHomeActivityComponent mockHomeActivityComponent =
-                DaggerMockApplicationComponent.builder()
-                        .applicationModule(new ApplicationModule(activity.getApplication()))
-                        .androidModule(mockAndroidModule)
-                        .build()
-                        .mockHomeActivityComponent(mockHomeActivityModule);
-
-        mockHomeActivityComponent.injectInTest(this);
-
-        Whitebox.setInternalState(activity, "component", mockHomeActivityComponent);
-
-        reset(mockSharedPreferences, mockDummyContentFactory);
+        mockDummyContentFactory = mock(DummyContentFactory.class);
+        ComponentsFactory.register(new ComponentsTestFactory());
     }
 
     public void testHomeActivity_example() throws SQLException {
@@ -77,10 +47,44 @@ public class HomeActivityTest extends RobotiumMockingTest<HomeActivity> {
         solo.assertCurrentActivity("Current activity must be HomeActivity", HomeActivity.class, true);
         assertTextViewVisibleOnScreen("Hello World from test!");
 
-        // we check that non mocked objects are still injectables
-        assertNotNull(locationManager);
-
         verify(mockDummyContentFactory).getDummyContent();
-        verifyNoMoreInteractions(mockDummyContentFactory, mockSharedPreferences);
+        verifyNoMoreInteractions(mockDummyContentFactory);
+    }
+
+    /**********************************************************************************************/
+
+
+    private class ComponentsTestFactory extends ComponentsFactory {
+
+        @Override
+        public ApplicationComponent buildApplicationComponent(Context applicationContext) {
+            return DaggerApplicationComponent
+                    .builder()
+                    .androidModule(new AndroidModule())
+                    .applicationModule(new ApplicationModule(getInstrumentation().getContext()))
+                    .build();
+        }
+
+        @Override
+        public HomeActivityComponent buildHomeActivityComponent(ApplicationComponent applicationComponent, HomeActivity homeActivity) {
+            return applicationComponent
+                    .homeActivityComponent(new HomeActivityTestModule(homeActivity, mockDummyContentFactory));
+        }
+    }
+
+    @Module
+    public static class HomeActivityTestModule extends HomeActivityModule {
+        private final DummyContentFactory mock;
+
+        public HomeActivityTestModule(Activity activity, DummyContentFactory mock) {
+            super(activity);
+            this.mock = mock;
+        }
+
+        @NonNull
+        @Override
+        protected DummyContentFactory getDummyContentFactory(@ForApplication Context context) {
+            return mock;
+        }
     }
 }

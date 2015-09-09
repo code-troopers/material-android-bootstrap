@@ -5,8 +5,7 @@ import android.util.Log;
 
 import com.codetroopers.materialAndroidBootstrap.BuildConfig;
 import com.codetroopers.materialAndroidBootstrap.core.components.ApplicationComponent;
-import com.codetroopers.materialAndroidBootstrap.core.components.DaggerApplicationComponent;
-import com.codetroopers.materialAndroidBootstrap.core.modules.ApplicationModule;
+import com.codetroopers.materialAndroidBootstrap.core.components.ComponentsFactory;
 
 import timber.log.Timber;
 
@@ -26,10 +25,7 @@ public class AndroidBootstrapApplication extends Application implements HasCompo
     public ApplicationComponent getComponent() {
         if (applicationComponent == null) {
             // Dagger component init
-            applicationComponent = DaggerApplicationComponent
-                    .builder()
-                    .applicationModule(new ApplicationModule(this))
-                    .build();
+            applicationComponent = ComponentsFactory.get().buildApplicationComponent(this);
         }
         return applicationComponent;
     }

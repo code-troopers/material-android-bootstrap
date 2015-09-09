@@ -16,8 +16,8 @@ import android.widget.TextView;
 import com.codetroopers.materialAndroidBootstrap.R;
 import com.codetroopers.materialAndroidBootstrap.core.AndroidBootstrapApplication;
 import com.codetroopers.materialAndroidBootstrap.core.HasComponent;
+import com.codetroopers.materialAndroidBootstrap.core.components.ComponentsFactory;
 import com.codetroopers.materialAndroidBootstrap.core.components.HomeActivityComponent;
-import com.codetroopers.materialAndroidBootstrap.core.modules.HomeActivityModule;
 import com.codetroopers.materialAndroidBootstrap.example.DummyContentFactory;
 import com.codetroopers.materialAndroidBootstrap.ui.activity.core.BaseActionBarActivity;
 import com.codetroopers.materialAndroidBootstrap.util.Strings;
@@ -50,8 +50,8 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.component = ((AndroidBootstrapApplication) getApplication()).getComponent()
-                .homeActivityComponent(new HomeActivityModule(this));
+        component = ComponentsFactory.get()
+                .buildHomeActivityComponent(((AndroidBootstrapApplication) getApplication()).getComponent(), this);
         component.injectActivity(this);
 
         if (UIUtils.isTablet(this)) {

@@ -2,6 +2,7 @@ package com.codetroopers.materialAndroidBootstrap.core.modules;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.codetroopers.materialAndroidBootstrap.core.components.ActivityScope;
 import com.codetroopers.materialAndroidBootstrap.example.DummyContentFactory;
@@ -26,7 +27,15 @@ public class HomeActivityModule {
 
     @ActivityScope
     @Provides
-    public DummyContentFactory provideDummyContentFactory(@ForApplication Context context) {
+    DummyContentFactory provideDummyContentFactory(@ForApplication Context context) {
+        return getDummyContentFactory(context);
+    }
+
+    /**
+     * Visible for testing
+     */
+    @NonNull
+    protected DummyContentFactory getDummyContentFactory(@ForApplication Context context) {
         return new DummyContentFactory(context);
     }
 }

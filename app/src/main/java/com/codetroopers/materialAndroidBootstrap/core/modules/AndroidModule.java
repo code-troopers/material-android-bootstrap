@@ -20,12 +20,19 @@ import static android.content.Context.LOCATION_SERVICE;
 public class AndroidModule {
     @Provides
     @Singleton
-    public LocationManager provideLocationManager(@ForApplication final Context context) {
+    LocationManager provideLocationManager(@ForApplication final Context context) {
         return (LocationManager) context.getSystemService(LOCATION_SERVICE);
     }
 
     @Provides
-    public SharedPreferences provideDefaultSharedPreferences(@ForApplication final Context context) {
+    SharedPreferences provideDefaultSharedPreferences(@ForApplication final Context context) {
+        return getDefaultSharedPreferences(context);
+    }
+
+    /**
+     * Visible for testing
+     */
+    protected SharedPreferences getDefaultSharedPreferences(@ForApplication Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 }

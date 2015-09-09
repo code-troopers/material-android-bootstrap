@@ -5,20 +5,23 @@ import android.content.SharedPreferences;
 import android.location.LocationManager;
 
 import com.codetroopers.materialAndroidBootstrap.core.RobotiumMockingTest;
-import com.codetroopers.materialAndroidBootstrap.core.modules.AndroidBootstrapModule;
+import com.codetroopers.materialAndroidBootstrap.core.components.DaggerMockApplicationComponent;
+import com.codetroopers.materialAndroidBootstrap.core.components.MockHomeActivityComponent;
 import com.codetroopers.materialAndroidBootstrap.core.modules.AndroidModule;
-import com.codetroopers.materialAndroidBootstrap.core.modules.ForApplication;
+import com.codetroopers.materialAndroidBootstrap.core.modules.ApplicationModule;
+import com.codetroopers.materialAndroidBootstrap.core.modules.HomeActivityModule;
 import com.codetroopers.materialAndroidBootstrap.example.DummyContentFactory;
 import com.robotium.solo.Solo;
+
+import org.mockito.Matchers;
+import org.mockito.Mockito;
+import org.mockito.internal.util.reflection.Whitebox;
 
 import java.sql.SQLException;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
-import dagger.Module;
-import dagger.Provides;
-
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
@@ -40,18 +43,31 @@ public class HomeActivityTest extends RobotiumMockingTest<HomeActivity> {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        mockInjector.inject(this);
+
+        final HomeActivity activity = getActivity();
+
+        final AndroidModule mockAndroidModule = Mockito.spy(new AndroidModule());
+        doReturn(mock(SharedPreferences.class))
+                .when(mockAndroidModule)
+                .provideDefaultSharedPreferences(Matchers.<Context>anyObject());
+
+        final HomeActivityModule mockHomeActivityModule = Mockito.spy(new HomeActivityModule(activity));
+        doReturn(mock(DummyContentFactory.class))
+                .when(mockHomeActivityModule)
+                .provideDummyContentFactory(Matchers.<Context>anyObject());
+
+        final MockHomeActivityComponent mockHomeActivityComponent =
+                DaggerMockApplicationComponent.builder()
+                        .applicationModule(new ApplicationModule(activity.getApplication()))
+                        .androidModule(mockAndroidModule)
+                        .build()
+                        .mockHomeActivityComponent(mockHomeActivityModule);
+
+        mockHomeActivityComponent.injectInTest(this);
+
+        Whitebox.setInternalState(activity, "component", mockHomeActivityComponent);
+
         reset(mockSharedPreferences, mockDummyContentFactory);
-    }
-
-    @Override
-    protected AndroidModule getMockAndroidModule() {
-        return new AndroidTestModule();
-    }
-
-    @Override
-    protected AndroidBootstrapModule getMockAndroidBootstrapModule() {
-        return new AndroidBootstrapTestModule();
     }
 
     public void testHomeActivity_example() throws SQLException {
@@ -66,27 +82,5 @@ public class HomeActivityTest extends RobotiumMockingTest<HomeActivity> {
 
         verify(mockDummyContentFactory).getDummyContent();
         verifyNoMoreInteractions(mockDummyContentFactory, mockSharedPreferences);
-    }
-
-    /**
-     * DAGGER injection for the mocks
-     */
-
-    @Module
-    static class AndroidBootstrapTestModule extends AndroidBootstrapModule {
-        @Provides
-        @Singleton
-        DummyContentFactory provideDummyContentFactory(@ForApplication final Context context) {
-            return mock(DummyContentFactory.class);
-        }
-    }
-
-    @Module
-    static class AndroidTestModule extends AndroidModule {
-        @Provides
-        @Singleton
-        SharedPreferences provideDefaultSharedPreferences(@ForApplication Context context) {
-            return mock(SharedPreferences.class);
-        }
     }
 }

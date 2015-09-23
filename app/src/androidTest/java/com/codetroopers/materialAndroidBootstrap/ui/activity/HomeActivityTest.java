@@ -4,23 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.codetroopers.materialAndroidBootstrap.core.RobotiumMockingTest;
-import com.codetroopers.materialAndroidBootstrap.core.components.ActivityScope;
 import com.codetroopers.materialAndroidBootstrap.core.components.ApplicationComponent;
 import com.codetroopers.materialAndroidBootstrap.core.components.ComponentsFactory;
 import com.codetroopers.materialAndroidBootstrap.core.components.HomeActivityComponent;
-import com.codetroopers.materialAndroidBootstrap.core.modules.AndroidModule;
-import com.codetroopers.materialAndroidBootstrap.core.modules.ApplicationModule;
 import com.codetroopers.materialAndroidBootstrap.core.modules.ForApplication;
 import com.codetroopers.materialAndroidBootstrap.core.modules.HomeActivityModule;
 import com.codetroopers.materialAndroidBootstrap.example.DummyContentFactory;
 import com.robotium.solo.Solo;
 
 import java.sql.SQLException;
-
-import javax.inject.Singleton;
-
-import dagger.Component;
-import dagger.Subcomponent;
 
 import static com.codetroopers.materialAndroidBootstrap.core.SingletonMockFactory.mock;
 import static org.mockito.Mockito.verify;
@@ -58,44 +50,10 @@ public class HomeActivityTest extends RobotiumMockingTest<HomeActivity> {
 
 
     private static class ComponentsTestFactory extends ComponentsFactory {
-
-        @Override
-        public ApplicationComponent buildApplicationComponent(Context applicationContext) {
-            return DaggerHomeActivityTest_ApplicationTestComponent
-                    .builder()
-                    .applicationModule(new ApplicationModule(applicationContext))
-                    .build();
-        }
-
         @Override
         public HomeActivityComponent buildHomeActivityComponent(ApplicationComponent applicationComponent, HomeActivity homeActivity) {
-            return ((ApplicationTestComponent) applicationComponent)
-                    .homeActivityTestComponent(new HomeActivityTestModule(homeActivity));
+            return applicationComponent.homeActivityComponent(new HomeActivityTestModule(homeActivity));
         }
-    }
-
-    /****************************************
-     * Custom Component for test injections *
-     ****************************************/
-
-    @Singleton
-    @Component(
-            modules = {
-                    ApplicationModule.class,
-                    AndroidModule.class
-            }
-    )
-    public interface ApplicationTestComponent extends ApplicationComponent {
-        HomeActivityTestComponent homeActivityTestComponent(HomeActivityModule homeActivityModule);
-    }
-
-    @ActivityScope
-    @Subcomponent(
-            modules = {
-                    HomeActivityModule.class
-            }
-    )
-    public interface HomeActivityTestComponent extends HomeActivityComponent {
     }
 
     /********************

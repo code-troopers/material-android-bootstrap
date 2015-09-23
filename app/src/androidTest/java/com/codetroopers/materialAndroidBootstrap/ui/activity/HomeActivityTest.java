@@ -2,12 +2,12 @@ package com.codetroopers.materialAndroidBootstrap.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
+import android.content.SharedPreferences;
 
 import com.codetroopers.materialAndroidBootstrap.core.RobotiumMockingTest;
+import com.codetroopers.materialAndroidBootstrap.core.components.ActivityScope;
 import com.codetroopers.materialAndroidBootstrap.core.components.ApplicationComponent;
 import com.codetroopers.materialAndroidBootstrap.core.components.ComponentsFactory;
-import com.codetroopers.materialAndroidBootstrap.core.components.DaggerApplicationComponent;
 import com.codetroopers.materialAndroidBootstrap.core.components.HomeActivityComponent;
 import com.codetroopers.materialAndroidBootstrap.core.modules.AndroidModule;
 import com.codetroopers.materialAndroidBootstrap.core.modules.ApplicationModule;
@@ -18,9 +18,12 @@ import com.robotium.solo.Solo;
 
 import java.sql.SQLException;
 
-import dagger.Module;
+import javax.inject.Singleton;
 
-import static org.mockito.Mockito.mock;
+import dagger.Component;
+import dagger.Subcomponent;
+
+import static com.codetroopers.materialAndroidBootstrap.core.SingletonMockFactory.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -44,6 +47,7 @@ public class HomeActivityTest extends RobotiumMockingTest<HomeActivity> {
         when(mockDummyContentFactory.getDummyContent()).thenReturn("Hello World from test!");
 
         final Solo solo = startActivity();
+
         solo.assertCurrentActivity("Current activity must be HomeActivity", HomeActivity.class, true);
         assertTextViewVisibleOnScreen("Hello World from test!");
 
@@ -54,37 +58,67 @@ public class HomeActivityTest extends RobotiumMockingTest<HomeActivity> {
     /**********************************************************************************************/
 
 
-    private class ComponentsTestFactory extends ComponentsFactory {
+    private static class ComponentsTestFactory extends ComponentsFactory {
 
         @Override
         public ApplicationComponent buildApplicationComponent(Context applicationContext) {
-            return DaggerApplicationComponent
+            return DaggerHomeActivityTest_ApplicationTestComponent
                     .builder()
-                    .androidModule(new AndroidModule())
-                    .applicationModule(new ApplicationModule(getInstrumentation().getContext()))
+                    .androidModule(new AndroidTestModule())
+                    .applicationModule(new ApplicationModule(applicationContext))
                     .build();
         }
 
         @Override
         public HomeActivityComponent buildHomeActivityComponent(ApplicationComponent applicationComponent, HomeActivity homeActivity) {
-            return applicationComponent
-                    .homeActivityComponent(new HomeActivityTestModule(homeActivity, mockDummyContentFactory));
+            return ((ApplicationTestComponent) applicationComponent)
+                    .homeActivityTestComponent(new HomeActivityTestModule(homeActivity));
         }
     }
 
-    @Module
-    public static class HomeActivityTestModule extends HomeActivityModule {
-        private final DummyContentFactory mock;
+    /****************************************
+     * Custom Component for test injections *
+     ****************************************/
 
-        public HomeActivityTestModule(Activity activity, DummyContentFactory mock) {
+    @Singleton
+    @Component(
+            modules = {
+                    ApplicationModule.class,
+                    AndroidModule.class
+            }
+    )
+    public interface ApplicationTestComponent extends ApplicationComponent {
+        HomeActivityTestComponent homeActivityTestComponent(HomeActivityModule homeActivityModule);
+    }
+
+    @ActivityScope
+    @Subcomponent(
+            modules = {
+                    HomeActivityModule.class
+            }
+    )
+    public interface HomeActivityTestComponent extends HomeActivityComponent {
+    }
+
+    /********************
+     * Mocking Modules  *
+     ********************/
+
+    public static class HomeActivityTestModule extends HomeActivityModule {
+        public HomeActivityTestModule(Activity activity) {
             super(activity);
-            this.mock = mock;
         }
 
-        @NonNull
         @Override
-        protected DummyContentFactory getDummyContentFactory(@ForApplication Context context) {
-            return mock;
+        protected DummyContentFactory provideDummyContentFactory(@ForApplication Context context) {
+            return mock(DummyContentFactory.class);
+        }
+    }
+
+    public static class AndroidTestModule extends AndroidModule {
+        @Override
+        protected SharedPreferences provideDefaultSharedPreferences(@ForApplication Context context) {
+            return mock(SharedPreferences.class);
         }
     }
 }

@@ -2,7 +2,6 @@ package com.codetroopers.materialAndroidBootstrap.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import com.codetroopers.materialAndroidBootstrap.core.RobotiumMockingTest;
 import com.codetroopers.materialAndroidBootstrap.core.components.ActivityScope;
@@ -64,7 +63,6 @@ public class HomeActivityTest extends RobotiumMockingTest<HomeActivity> {
         public ApplicationComponent buildApplicationComponent(Context applicationContext) {
             return DaggerHomeActivityTest_ApplicationTestComponent
                     .builder()
-                    .androidModule(new AndroidTestModule())
                     .applicationModule(new ApplicationModule(applicationContext))
                     .build();
         }
@@ -112,13 +110,6 @@ public class HomeActivityTest extends RobotiumMockingTest<HomeActivity> {
         @Override
         protected DummyContentFactory provideDummyContentFactory(@ForApplication Context context) {
             return mock(DummyContentFactory.class);
-        }
-    }
-
-    public static class AndroidTestModule extends AndroidModule {
-        @Override
-        protected SharedPreferences provideDefaultSharedPreferences(@ForApplication Context context) {
-            return mock(SharedPreferences.class);
         }
     }
 }

@@ -2,45 +2,60 @@ package com.codetroopers.materialAndroidBootstrap.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
+import android.test.suitebuilder.annotation.LargeTest;
 
-import com.codetroopers.materialAndroidBootstrap.core.RobotiumMockingTest;
 import com.codetroopers.materialAndroidBootstrap.core.components.ApplicationComponent;
 import com.codetroopers.materialAndroidBootstrap.core.components.ComponentsFactory;
 import com.codetroopers.materialAndroidBootstrap.core.components.HomeActivityComponent;
 import com.codetroopers.materialAndroidBootstrap.core.modules.ForApplication;
 import com.codetroopers.materialAndroidBootstrap.core.modules.HomeActivityModule;
 import com.codetroopers.materialAndroidBootstrap.example.DummyContentFactory;
-import com.robotium.solo.Solo;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
 import java.sql.SQLException;
 
-import static com.codetroopers.materialAndroidBootstrap.core.SingletonMockFactory.mock;
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-public class HomeActivityTest extends RobotiumMockingTest<HomeActivity> {
+@RunWith(AndroidJUnit4.class)
+@LargeTest
+public class HomeActivityTest {
 
+    @Rule
+    public ActivityTestRule<HomeActivity> rule = new ActivityTestRule<>(HomeActivity.class, true, false);
+    @Rule
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
+
+    @Mock
     DummyContentFactory mockDummyContentFactory;
 
-    public HomeActivityTest() {
-        super(HomeActivity.class);
-    }
-
-    @Override
+    @Before
     public void setUp() throws Exception {
-        super.setUp();
-        mockDummyContentFactory = mock(DummyContentFactory.class);
         ComponentsFactory.register(new ComponentsTestFactory());
     }
 
+    @Test
     public void testHomeActivity_example() throws SQLException {
         when(mockDummyContentFactory.getDummyContent()).thenReturn("Hello World from test!");
 
-        final Solo solo = startActivity();
+        rule.launchActivity(null);
 
-        solo.assertCurrentActivity("Current activity must be HomeActivity", HomeActivity.class, true);
-        assertTextViewVisibleOnScreen("Hello World from test!");
+        onView(withText("Hello World from test!"))
+                .check(matches(isDisplayed()));
 
         verify(mockDummyContentFactory).getDummyContent();
         verifyNoMoreInteractions(mockDummyContentFactory);
@@ -49,7 +64,7 @@ public class HomeActivityTest extends RobotiumMockingTest<HomeActivity> {
     /**********************************************************************************************/
 
 
-    private static class ComponentsTestFactory extends ComponentsFactory {
+    private class ComponentsTestFactory extends ComponentsFactory {
         @Override
         public HomeActivityComponent buildHomeActivityComponent(ApplicationComponent applicationComponent, HomeActivity homeActivity) {
             return applicationComponent.homeActivityComponent(new HomeActivityTestModule(homeActivity));
@@ -60,14 +75,14 @@ public class HomeActivityTest extends RobotiumMockingTest<HomeActivity> {
      * Mocking Modules  *
      ********************/
 
-    public static class HomeActivityTestModule extends HomeActivityModule {
+    public class HomeActivityTestModule extends HomeActivityModule {
         public HomeActivityTestModule(Activity activity) {
             super(activity);
         }
 
         @Override
         protected DummyContentFactory provideDummyContentFactory(@ForApplication Context context) {
-            return mock(DummyContentFactory.class);
+            return mockDummyContentFactory;
         }
     }
 }

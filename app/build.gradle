@@ -39,6 +39,7 @@ dependencies {
     def daggerVersion = "2.0.1"
     def dexmakerVersion = "1.4"
     def supportTestVersion = "0.4.1"
+    def espressoVersion = "2.2.1"
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
@@ -60,7 +61,14 @@ dependencies {
     androidTestCompile 'com.crittercism.dexmaker:dexmaker-mockito:' + dexmakerVersion
     androidTestCompile 'com.android.support.test:runner:' + supportTestVersion
     androidTestCompile 'com.android.support.test:rules:' + supportTestVersion
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:' + espressoVersion
+    androidTestCompile('com.android.support.test.espresso:espresso-contrib:' + espressoVersion) {
+        exclude module: 'appcompat'
+        exclude module: 'support-v4'
+        exclude module: 'support-annotations'
+        exclude module: 'recyclerview-v7'
+    }
+
     //Uncomment to add crashlytics
     //compile('com.crashlytics.sdk.android:crashlytics:2.2.0@aar') {
     //  transitive = true;

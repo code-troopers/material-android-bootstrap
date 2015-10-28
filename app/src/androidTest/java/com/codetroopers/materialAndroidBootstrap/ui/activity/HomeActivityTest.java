@@ -6,6 +6,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
+import com.codetroopers.materialAndroidBootstrap.R;
 import com.codetroopers.materialAndroidBootstrap.core.components.ApplicationComponent;
 import com.codetroopers.materialAndroidBootstrap.core.components.ComponentsFactory;
 import com.codetroopers.materialAndroidBootstrap.core.components.HomeActivityComponent;
@@ -25,8 +26,12 @@ import java.sql.SQLException;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.contrib.DrawerActions.close;
+import static android.support.test.espresso.contrib.DrawerActions.open;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.core.IsNot.not;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -49,7 +54,7 @@ public class HomeActivityTest {
     }
 
     @Test
-    public void testHomeActivity_example() throws SQLException {
+    public void testHomeActivity_exampleMockInjection() throws SQLException {
         when(mockDummyContentFactory.getDummyContent()).thenReturn("Hello World from test!");
 
         rule.launchActivity(null);
@@ -59,6 +64,26 @@ public class HomeActivityTest {
 
         verify(mockDummyContentFactory).getDummyContent();
         verifyNoMoreInteractions(mockDummyContentFactory);
+    }
+
+    @Test
+    public void testHomeActivity_exampleOpenMenu() throws SQLException {
+        when(mockDummyContentFactory.getDummyContent()).thenReturn("Hello World from test!");
+
+        rule.launchActivity(null);
+
+        onView(withText("menu 0"))
+                .check(matches(not(isDisplayed())));
+
+        onView(withId(R.id.drawer))
+                .perform(open());
+        onView(withText("menu 0"))
+                .check(matches(isDisplayed()));
+
+        onView(withId(R.id.drawer))
+                .perform(close());
+        onView(withText("menu 0"))
+                .check(matches(not(isDisplayed())));
     }
 
     /**********************************************************************************************/

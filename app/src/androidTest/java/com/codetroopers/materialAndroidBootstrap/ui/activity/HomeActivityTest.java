@@ -1,15 +1,12 @@
 package com.codetroopers.materialAndroidBootstrap.ui.activity;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
-import android.os.Build;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
 import com.codetroopers.materialAndroidBootstrap.R;
+import com.codetroopers.materialAndroidBootstrap.RecreateActivityTest;
 import com.codetroopers.materialAndroidBootstrap.core.components.ApplicationComponent;
 import com.codetroopers.materialAndroidBootstrap.core.components.ComponentsFactory;
 import com.codetroopers.materialAndroidBootstrap.core.components.HomeActivityComponent;
@@ -39,15 +36,18 @@ import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class HomeActivityTest {
+public class HomeActivityTest extends RecreateActivityTest<HomeActivity> {
 
-    @Rule
-    public ActivityTestRule<HomeActivity> rule = new ActivityTestRule<>(HomeActivity.class, true, false);
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
     DummyContentFactory mockDummyContentFactory;
+
+    @Override
+    protected Class<HomeActivity> getActivityClass() {
+        return HomeActivity.class;
+    }
 
     @Before
     public void setUp() throws Exception {
@@ -82,19 +82,6 @@ public class HomeActivityTest {
                 .perform(close());
         onView(withText("menu 0"))
                 .check(matches(not(isDisplayed())));
-    }
-
-    @Test
-    public void testHomeActivity_recreate() {
-        rule.launchActivity(null);
-
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-            @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-            @Override
-            public void run() {
-                rule.getActivity().recreate();
-            }
-        });
     }
 
 

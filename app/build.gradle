@@ -30,12 +30,14 @@ android {
 }
 
 dependencies {
+    def daggerVersion = "2.0.1"
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.android.support:recyclerview-v7:21.0.0'
     compile 'com.jakewharton:butterknife:6.0.0'
     compile 'com.squareup.picasso:picasso:2.4.0'
-    compile 'com.google.dagger:dagger:2.0'
+    compile 'com.google.dagger:dagger:' + daggerVersion
     compile 'com.jakewharton.timber:timber:3.0.2'
 
     // tests
@@ -47,9 +49,8 @@ dependencies {
     //compile('com.crashlytics.sdk.android:crashlytics:2.2.0@aar') {
     //  transitive = true;
     //}
-
-    apt "com.google.dagger:dagger-compiler:2.0"
-    androidTestApt "com.google.dagger:dagger-compiler:2.0"
+    apt "com.google.dagger:dagger-compiler:" + daggerVersion
+    androidTestApt "com.google.dagger:dagger-compiler:" + daggerVersion
 
     provided 'javax.annotation:jsr250-api:1.0'
 }

@@ -31,6 +31,7 @@ android {
 
 dependencies {
     def daggerVersion = "2.0.1"
+    def dexmakerVersion = "1.4"
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
@@ -42,8 +43,9 @@ dependencies {
 
     // tests
     androidTestCompile 'org.mockito:mockito-core:1.10.19'
-    androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
-    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.2'
+    androidTestCompile 'com.crittercism.dexmaker:dexmaker:' + dexmakerVersion
+    androidTestCompile 'com.crittercism.dexmaker:dexmaker-dx:' + dexmakerVersion
+    androidTestCompile 'com.crittercism.dexmaker:dexmaker-mockito:' + dexmakerVersion
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.3.1'
     //Uncomment to add crashlytics
     //compile('com.crashlytics.sdk.android:crashlytics:2.2.0@aar') {

@@ -1,7 +1,10 @@
 package com.codetroopers.materialAndroidBootstrap.ui.activity;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
@@ -21,8 +24,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-
-import java.sql.SQLException;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -51,12 +52,11 @@ public class HomeActivityTest {
     @Before
     public void setUp() throws Exception {
         ComponentsFactory.register(new ComponentsTestFactory());
+        when(mockDummyContentFactory.getDummyContent()).thenReturn("Hello World from test!");
     }
 
     @Test
-    public void testHomeActivity_exampleMockInjection() throws SQLException {
-        when(mockDummyContentFactory.getDummyContent()).thenReturn("Hello World from test!");
-
+    public void testHomeActivity_exampleMockInjection() {
         rule.launchActivity(null);
 
         onView(withText("Hello World from test!"))
@@ -67,9 +67,7 @@ public class HomeActivityTest {
     }
 
     @Test
-    public void testHomeActivity_exampleOpenMenu() throws SQLException {
-        when(mockDummyContentFactory.getDummyContent()).thenReturn("Hello World from test!");
-
+    public void testHomeActivity_exampleOpenMenu() {
         rule.launchActivity(null);
 
         onView(withText("menu 0"))
@@ -85,6 +83,20 @@ public class HomeActivityTest {
         onView(withText("menu 0"))
                 .check(matches(not(isDisplayed())));
     }
+
+    @Test
+    public void testHomeActivity_recreate() {
+        rule.launchActivity(null);
+
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+            @Override
+            public void run() {
+                rule.getActivity().recreate();
+            }
+        });
+    }
+
 
     /**********************************************************************************************/
 

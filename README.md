@@ -7,10 +7,12 @@ This bootstrap contains :
 * material theme with appcompat to API>14
 * new toolbar implementation
 * a drawer who respect the material guidelines (only on API21)
-* Dagger
+* Dagger 2
 * ButterKnife
 * Picasso
 * Crashlytics
+* JUnit 4
+* Espresso
 
 ## Thanks
 

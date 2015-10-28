@@ -9,7 +9,7 @@ import android.support.test.rule.ActivityTestRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-public class RecreateActivityTest<T extends Activity> {
+public abstract class RecreateActivityTest<T extends Activity> {
     @Rule
     public ActivityTestRule<T> rule;
 

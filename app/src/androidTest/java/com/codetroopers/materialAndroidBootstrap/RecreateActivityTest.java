@@ -9,11 +9,13 @@ import android.support.test.rule.ActivityTestRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-public abstract class RecreateActivityTest<T extends Activity> {
+public class RecreateActivityTest<T extends Activity> {
     @Rule
-    public ActivityTestRule<T> rule = new ActivityTestRule<>(getActivityClass(), true, false);
+    public ActivityTestRule<T> rule;
 
-    protected abstract Class<T> getActivityClass();
+    protected RecreateActivityTest(Class<T> clazz) {
+        rule = new ActivityTestRule<>(clazz, true, false);
+    }
 
     @Test
     public void testRecreate() {

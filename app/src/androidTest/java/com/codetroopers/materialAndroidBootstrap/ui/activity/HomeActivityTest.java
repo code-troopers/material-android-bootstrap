@@ -44,9 +44,8 @@ public class HomeActivityTest extends RecreateActivityTest<HomeActivity> {
     @Mock
     DummyContentFactory mockDummyContentFactory;
 
-    @Override
-    protected Class<HomeActivity> getActivityClass() {
-        return HomeActivity.class;
+    public HomeActivityTest() {
+        super(HomeActivity.class);
     }
 
     @Before

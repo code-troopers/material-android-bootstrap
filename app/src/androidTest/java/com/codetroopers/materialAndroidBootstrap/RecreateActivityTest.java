@@ -2,6 +2,7 @@ package com.codetroopers.materialAndroidBootstrap;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Instrumentation;
 import android.os.Build;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
@@ -21,13 +22,15 @@ public abstract class RecreateActivityTest<T extends Activity> {
     public void testRecreate() {
         launchActivity();
 
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+        final Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
+        instrumentation.runOnMainSync(new Runnable() {
             @TargetApi(Build.VERSION_CODES.HONEYCOMB)
             @Override
             public void run() {
                 rule.getActivity().recreate();
             }
         });
+        instrumentation.waitForIdleSync();
     }
 
     /**

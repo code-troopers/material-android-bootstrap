@@ -6,6 +6,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.codetroopers.materialAndroidBootstrap.R;
+import com.codetroopers.materialAndroidBootstrap.core.AndroidBootstrapApplication;
+import com.codetroopers.materialAndroidBootstrap.core.components.ApplicationComponent;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -28,6 +30,10 @@ public abstract class BaseActionBarActivity extends ActionBarActivity {
             setSupportActionBar(mToolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    protected final ApplicationComponent getApplicationComponent() {
+        return ((AndroidBootstrapApplication) getApplication()).getComponent();
     }
 
     protected abstract int getLayoutResource();

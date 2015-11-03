@@ -7,6 +7,7 @@ import android.test.suitebuilder.annotation.LargeTest;
 
 import com.codetroopers.materialAndroidBootstrap.R;
 import com.codetroopers.materialAndroidBootstrap.RecreateActivityTest;
+import com.codetroopers.materialAndroidBootstrap.TestComponentsRule;
 import com.codetroopers.materialAndroidBootstrap.core.components.ApplicationComponent;
 import com.codetroopers.materialAndroidBootstrap.core.components.ComponentsFactory;
 import com.codetroopers.materialAndroidBootstrap.core.components.HomeActivityComponent;
@@ -40,6 +41,8 @@ public class HomeActivityTest extends RecreateActivityTest<HomeActivity> {
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
+    @Rule
+    public TestComponentsRule testComponentsRule = new TestComponentsRule(new ComponentsTestFactory());
 
     @Mock
     DummyContentFactory mockDummyContentFactory;
@@ -50,7 +53,6 @@ public class HomeActivityTest extends RecreateActivityTest<HomeActivity> {
 
     @Before
     public void setUp() throws Exception {
-        ComponentsFactory.register(new ComponentsTestFactory());
         when(mockDummyContentFactory.getDummyContent()).thenReturn("Hello World from test!");
     }
 

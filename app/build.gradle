@@ -41,6 +41,10 @@ dependencies {
     def supportTestVersion = "0.4.1"
     def espressoVersion = "2.2.1"
 
+    apt "com.google.dagger:dagger-compiler:" + daggerVersion
+
+    provided 'javax.annotation:jsr250-api:1.0'
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.android.support:recyclerview-v7:21.0.0'
@@ -49,9 +53,20 @@ dependencies {
     compile 'com.google.dagger:dagger:' + daggerVersion
     compile 'com.jakewharton.timber:timber:3.1.0'
 
+    //Uncomment to add crashlytics
+    //compile('com.crashlytics.sdk.android:crashlytics:2.2.0@aar') {
+    //  transitive = true;
+    //}
+
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
+
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
+
     testCompile 'junit:junit:4.12'
     testCompile 'com.squareup.assertj:assertj-android:1.1.0'
     testCompile 'org.mockito:mockito-core:1.10.19'
+
+    androidTestApt "com.google.dagger:dagger-compiler:" + daggerVersion
 
     androidTestCompile 'junit:junit:4.12'
     androidTestCompile 'com.squareup.assertj:assertj-android:1.1.0'
@@ -68,15 +83,6 @@ dependencies {
         exclude module: 'support-annotations'
         exclude module: 'recyclerview-v7'
     }
-
-    //Uncomment to add crashlytics
-    //compile('com.crashlytics.sdk.android:crashlytics:2.2.0@aar') {
-    //  transitive = true;
-    //}
-    apt "com.google.dagger:dagger-compiler:" + daggerVersion
-    androidTestApt "com.google.dagger:dagger-compiler:" + daggerVersion
-
-    provided 'javax.annotation:jsr250-api:1.0'
 }
 
 /**
@@ -85,6 +91,7 @@ dependencies {
  * ==> see http://stackoverflow.com/questions/31807182/android-espresso-issue-dependency-conflict
  * we have to force the version used to remove this warning.
  */
+//noinspection GroovyAssignabilityCheck
 configurations.all {
     resolutionStrategy {
         force 'com.android.support:support-annotations:23.1.0'

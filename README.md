@@ -13,6 +13,7 @@ This bootstrap contains :
 * Crashlytics
 * JUnit 4
 * Espresso
+* LeakCanary
 
 ## Thanks
 

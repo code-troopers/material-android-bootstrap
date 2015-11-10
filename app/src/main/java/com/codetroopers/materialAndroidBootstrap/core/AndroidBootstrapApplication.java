@@ -6,6 +6,7 @@ import android.util.Log;
 import com.codetroopers.materialAndroidBootstrap.BuildConfig;
 import com.codetroopers.materialAndroidBootstrap.core.components.ApplicationComponent;
 import com.codetroopers.materialAndroidBootstrap.core.components.ComponentsFactory;
+import com.squareup.leakcanary.LeakCanary;
 
 import timber.log.Timber;
 
@@ -19,6 +20,7 @@ public class AndroidBootstrapApplication extends Application implements HasCompo
         //Fabric.with(this, new Crashlytics());
 
         initLoggers();
+        LeakCanary.install(this);
     }
 
     @Override

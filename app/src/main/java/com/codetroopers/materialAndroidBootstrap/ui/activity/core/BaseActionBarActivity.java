@@ -9,20 +9,19 @@ import com.codetroopers.materialAndroidBootstrap.R;
 import com.codetroopers.materialAndroidBootstrap.core.AndroidBootstrapApplication;
 import com.codetroopers.materialAndroidBootstrap.core.components.ApplicationComponent;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public abstract class BaseActionBarActivity extends ActionBarActivity {
 
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResource());
-        ButterKnife.inject(this);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         if (mToolbar != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mToolbar.setElevation(getResources().getDimensionPixelSize(R.dimen.action_bar_elevation));

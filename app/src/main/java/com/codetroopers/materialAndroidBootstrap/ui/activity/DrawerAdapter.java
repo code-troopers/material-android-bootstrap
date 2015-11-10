@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 import com.codetroopers.materialAndroidBootstrap.R;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder> {
     private OnItemClickListener mListener;
@@ -49,16 +49,16 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
     }
 
     public interface OnItemClickListener {
-        public void onClick(View view, int position);
+        void onClick(View view, int position);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @InjectView(android.R.id.text1)
+        @Bind(android.R.id.text1)
         TextView name;
 
         public ViewHolder(View view) {
             super(view);
-            ButterKnife.inject(this, view);
+            ButterKnife.bind(this, view);
         }
     }
 }

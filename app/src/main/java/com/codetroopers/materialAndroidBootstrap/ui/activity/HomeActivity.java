@@ -24,19 +24,19 @@ import com.codetroopers.materialAndroidBootstrap.util.UIUtils;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 import timber.log.Timber;
 
 public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter.OnItemClickListener, HasComponent<HomeActivityComponent> {
 
     private HomeActivityComponent component;
 
-    @InjectView(R.id.drawer)
+    @Bind(R.id.drawer)
     DrawerLayout mDrawer;
-    @InjectView(R.id.left_drawer)
+    @Bind(R.id.left_drawer)
     RecyclerView mDrawerList;
 
-    @InjectView(R.id.content)
+    @Bind(R.id.content)
     TextView tvContent;
 
     @Inject

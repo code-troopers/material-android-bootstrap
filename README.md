@@ -14,6 +14,7 @@ This bootstrap contains :
 * JUnit 4
 * Espresso
 * LeakCanary
+* Hugo
 
 ## Thanks
 

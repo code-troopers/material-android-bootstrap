@@ -25,8 +25,10 @@ import com.codetroopers.materialAndroidBootstrap.util.UIUtils;
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import hugo.weaving.DebugLog;
 import timber.log.Timber;
 
+@DebugLog
 public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter.OnItemClickListener, HasComponent<HomeActivityComponent> {
 
     private HomeActivityComponent component;

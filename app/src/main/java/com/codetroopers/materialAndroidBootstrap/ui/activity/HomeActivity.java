@@ -27,7 +27,10 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import hugo.weaving.DebugLog;
+import icepick.State;
 import timber.log.Timber;
+
+import static java.lang.String.format;
 
 @DebugLog
 public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter.OnItemClickListener, HasComponent<HomeActivityComponent> {
@@ -45,9 +48,11 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
     @Inject
     DummyContentFactory dummyContentFactory;
 
+    @State
+    DummyContent dummyContent;
+
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerAdapter mAdapter;
-    private DummyContent dummyContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,27 +75,15 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
                 Strings.namedFormat("INCREMENTAL = $incremental",
                         "incremental", Build.VERSION.INCREMENTAL)));
 
-        setupDrawer(savedInstanceState);
+        setupDrawer();
 
-        if (savedInstanceState == null) {
+        if (dummyContent == null) {
             dummyContent = dummyContentFactory.getDummyContent();
-        } else {
-            Timber.d("Content retrieved from saved bundle");
-            dummyContent = savedInstanceState.getParcelable("test");
         }
-        if (dummyContent != null) {
-            tvContent.setText(dummyContent.content());
-        }
+        tvContent.setText(format("[%s] %s", dummyContent.creationDate(), dummyContent.content()));
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        // FIXME icepick
-        outState.putParcelable("test", dummyContent);
-    }
-
-    private void setupDrawer(Bundle savedInstanceState) {
+    private void setupDrawer() {
         mAdapter = new DrawerAdapter(this);
 
         mDrawerList.setAdapter(mAdapter);
@@ -113,9 +106,6 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
             }
         };
         mDrawer.setDrawerListener(mDrawerToggle);
-        if (savedInstanceState == null) {
-            selectItem(0);
-        }
     }
 
     @Override

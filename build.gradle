@@ -4,6 +4,7 @@ buildscript {
     repositories {
         jcenter()
         mavenCentral()
+        maven {url "https://clojars.org/repo/"}
         //Uncomment to add crashlytics
         //maven { url 'https://maven.fabric.io/public' }
     }
@@ -22,8 +23,9 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        mavenCentral()
+        maven {url "https://clojars.org/repo/"}
         //Uncomment to add crashlytics
         //maven { url 'https://maven.fabric.io/public' }
-        mavenCentral()
     }
 }

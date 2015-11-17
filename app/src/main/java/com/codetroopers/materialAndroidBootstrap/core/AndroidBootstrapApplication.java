@@ -8,6 +8,7 @@ import com.codetroopers.materialAndroidBootstrap.core.components.ApplicationComp
 import com.codetroopers.materialAndroidBootstrap.core.components.ComponentsFactory;
 import com.squareup.leakcanary.LeakCanary;
 
+import icepick.Icepick;
 import timber.log.Timber;
 
 public class AndroidBootstrapApplication extends Application implements HasComponent<ApplicationComponent> {
@@ -20,6 +21,7 @@ public class AndroidBootstrapApplication extends Application implements HasCompo
         //Fabric.with(this, new Crashlytics());
 
         initLoggers();
+        Icepick.setDebug(BuildConfig.DEBUG);
         LeakCanary.install(this);
     }
 

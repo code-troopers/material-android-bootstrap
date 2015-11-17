@@ -11,6 +11,7 @@ import com.codetroopers.materialAndroidBootstrap.core.components.ApplicationComp
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import icepick.Icepick;
 
 public abstract class BaseActionBarActivity extends ActionBarActivity {
 
@@ -22,6 +23,7 @@ public abstract class BaseActionBarActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResource());
         ButterKnife.bind(this);
+        Icepick.restoreInstanceState(this, savedInstanceState);
         if (mToolbar != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mToolbar.setElevation(getResources().getDimensionPixelSize(R.dimen.action_bar_elevation));
@@ -33,6 +35,12 @@ public abstract class BaseActionBarActivity extends ActionBarActivity {
 
     protected final ApplicationComponent getApplicationComponent() {
         return ((AndroidBootstrapApplication) getApplication()).getComponent();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Icepick.saveInstanceState(this, outState);
     }
 
     protected abstract int getLayoutResource();

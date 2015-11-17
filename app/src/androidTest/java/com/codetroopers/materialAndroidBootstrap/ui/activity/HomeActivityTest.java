@@ -34,6 +34,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.IsNot.not;
+import static org.hamcrest.core.StringEndsWith.endsWith;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -64,7 +65,7 @@ public class HomeActivityTest extends RecreateActivityTest<HomeActivity> {
     public void testHomeActivity_exampleMockInjection() {
         rule.launchActivity(null);
 
-        onView(withText("Hello World from test!"))
+        onView(withText(endsWith("Hello World from test!")))
                 .check(matches(isDisplayed()));
 
         verify(mockDummyContentFactory).getDummyContent();

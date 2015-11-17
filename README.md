@@ -10,6 +10,7 @@ This bootstrap contains :
 * Dagger 2
 * ButterKnife
 * Picasso
+* AutoParcel
 * Crashlytics
 * JUnit 4
 * Espresso

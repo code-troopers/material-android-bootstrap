@@ -17,6 +17,7 @@ import com.codetroopers.materialAndroidBootstrap.R;
 import com.codetroopers.materialAndroidBootstrap.core.HasComponent;
 import com.codetroopers.materialAndroidBootstrap.core.components.ComponentsFactory;
 import com.codetroopers.materialAndroidBootstrap.core.components.HomeActivityComponent;
+import com.codetroopers.materialAndroidBootstrap.example.DummyContent;
 import com.codetroopers.materialAndroidBootstrap.example.DummyContentFactory;
 import com.codetroopers.materialAndroidBootstrap.ui.activity.core.BaseActionBarActivity;
 import com.codetroopers.materialAndroidBootstrap.util.Strings;
@@ -46,6 +47,7 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
 
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerAdapter mAdapter;
+    private DummyContent dummyContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +56,8 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
         component = ComponentsFactory.get().buildHomeActivityComponent(getApplicationComponent(), this);
         component.injectActivity(this);
 
-        if (UIUtils.isTablet(this)) {
-            Timber.d("Creating activity for a tablet context...");
-        } else {
-            Timber.d("Creating activity for a phone context...");
-        }
+        final String device = UIUtils.isTablet(this) ? "tablet" : "phone";
+        Timber.d("Creating activity for a %s context...", device);
         /**
          * examples of {@link #com.codetroopers.materialAndroidBootstrap.util.Strings} utilities methods
          */
@@ -73,7 +72,22 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
 
         setupDrawer(savedInstanceState);
 
-        tvContent.setText(dummyContentFactory.getDummyContent());
+        if (savedInstanceState == null) {
+            dummyContent = dummyContentFactory.getDummyContent();
+        } else {
+            Timber.d("Content retrieved from saved bundle");
+            dummyContent = savedInstanceState.getParcelable("test");
+        }
+        if (dummyContent != null) {
+            tvContent.setText(dummyContent.content());
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // FIXME icepick
+        outState.putParcelable("test", dummyContent);
     }
 
     private void setupDrawer(Bundle savedInstanceState) {

@@ -42,6 +42,7 @@ android {
 
 dependencies {
     def daggerVersion = "2.0.1"
+    def autoparcelVersion = "0.3.1"
     def dexmakerVersion = "1.4"
     def supportTestVersion = "0.4.1"
     def espressoVersion = "2.2.1"
@@ -51,6 +52,7 @@ dependencies {
     def mockitoVersion = "1.10.19"
 
     apt "com.google.dagger:dagger-compiler:" + daggerVersion
+    apt 'com.github.frankiesardo:auto-parcel-processor:' + autoparcelVersion
 
     provided 'javax.annotation:jsr250-api:1.0'
 
@@ -61,6 +63,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.4.0'
     compile 'com.google.dagger:dagger:' + daggerVersion
     compile 'com.jakewharton.timber:timber:3.1.0'
+    compile 'com.github.frankiesardo:auto-parcel:' + autoparcelVersion
 
     //Uncomment to add crashlytics
     //compile('com.crashlytics.sdk.android:crashlytics:2.2.0@aar') {

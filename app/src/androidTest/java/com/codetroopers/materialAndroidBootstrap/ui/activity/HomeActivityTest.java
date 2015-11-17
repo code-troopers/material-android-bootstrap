@@ -13,6 +13,7 @@ import com.codetroopers.materialAndroidBootstrap.core.components.ComponentsFacto
 import com.codetroopers.materialAndroidBootstrap.core.components.HomeActivityComponent;
 import com.codetroopers.materialAndroidBootstrap.core.modules.ForApplication;
 import com.codetroopers.materialAndroidBootstrap.core.modules.HomeActivityModule;
+import com.codetroopers.materialAndroidBootstrap.example.DummyContent;
 import com.codetroopers.materialAndroidBootstrap.example.DummyContentFactory;
 
 import org.junit.Before;
@@ -22,6 +23,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+
+import java.util.Date;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -53,7 +56,8 @@ public class HomeActivityTest extends RecreateActivityTest<HomeActivity> {
 
     @Before
     public void setUp() throws Exception {
-        when(mockDummyContentFactory.getDummyContent()).thenReturn("Hello World from test!");
+        DummyContent stubContent = DummyContent.create("Hello World from test!", new Date());
+        when(mockDummyContentFactory.getDummyContent()).thenReturn(stubContent);
     }
 
     @Test

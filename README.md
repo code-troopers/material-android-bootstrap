@@ -17,6 +17,7 @@ This bootstrap contains :
 * Espresso
 * LeakCanary
 * Hugo
+* Retrolambda
 
 ## Thanks
 

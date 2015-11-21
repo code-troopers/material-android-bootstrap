@@ -3,11 +3,11 @@ package com.codetroopers.materialAndroidBootstrap.ui.activity;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -90,7 +90,7 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
         // improve performance by indicating the list if fixed size.
         mDrawerList.setHasFixedSize(true);
         mDrawerList.setLayoutManager(new LinearLayoutManager(this));
-        mDrawer.setDrawerShadow(R.drawable.drawer_shadow, Gravity.START);
+        mDrawer.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         mDrawer.setStatusBarBackground(R.color.statusBarTransparentColor);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, getToolbar(), R.string.drawer_open, R.string.drawer_close) {
             @Override
@@ -147,7 +147,7 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
         }
         switch (item.getItemId()) {
             case android.R.id.home:
-                mDrawer.openDrawer(Gravity.START);
+                mDrawer.openDrawer(GravityCompat.START);
                 return true;
             case R.id.action_settings:
                 return true;

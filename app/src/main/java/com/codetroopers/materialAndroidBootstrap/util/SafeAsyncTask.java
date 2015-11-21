@@ -72,7 +72,7 @@ public abstract class SafeAsyncTask<ResultT> implements Callable<ResultT> {
 
 
     public FutureTask<Void> future() {
-        future = new FutureTask<Void>(newTask());
+        future = new FutureTask<>(newTask());
         return future;
     }
 
@@ -203,11 +203,9 @@ public abstract class SafeAsyncTask<ResultT> implements Callable<ResultT> {
         }
 
         protected void doPreExecute() throws Exception {
-            postToUiThreadAndWait(new Callable<Object>() {
-                public Object call() throws Exception {
-                    parent.onPreExecute();
-                    return null;
-                }
+            postToUiThreadAndWait(() -> {
+                parent.onPreExecute();
+                return null;
             });
         }
 
@@ -216,11 +214,9 @@ public abstract class SafeAsyncTask<ResultT> implements Callable<ResultT> {
         }
 
         protected void doSuccess(final ResultT r) throws Exception {
-            postToUiThreadAndWait(new Callable<Object>() {
-                public Object call() throws Exception {
-                    parent.onSuccess(r);
-                    return null;
-                }
+            postToUiThreadAndWait(() -> {
+                parent.onSuccess(r);
+                return null;
             });
         }
 
@@ -230,14 +226,12 @@ public abstract class SafeAsyncTask<ResultT> implements Callable<ResultT> {
                 stack.addAll(Arrays.asList(parent.launchLocation));
                 e.setStackTrace(stack.toArray(new StackTraceElement[stack.size()]));
             }
-            postToUiThreadAndWait(new Callable<Object>() {
-                public Object call() throws Exception {
-                    if (e instanceof InterruptedException || e instanceof InterruptedIOException)
-                        parent.onInterrupted(e);
-                    else
-                        parent.onException(e);
-                    return null;
-                }
+            postToUiThreadAndWait(() -> {
+                if (e instanceof InterruptedException || e instanceof InterruptedIOException)
+                    parent.onInterrupted(e);
+                else
+                    parent.onException(e);
+                return null;
             });
         }
 
@@ -247,20 +241,16 @@ public abstract class SafeAsyncTask<ResultT> implements Callable<ResultT> {
                 stack.addAll(Arrays.asList(parent.launchLocation));
                 e.setStackTrace(stack.toArray(new StackTraceElement[stack.size()]));
             }
-            postToUiThreadAndWait(new Callable<Object>() {
-                public Object call() throws Exception {
-                    parent.onThrowable(e);
-                    return null;
-                }
+            postToUiThreadAndWait(() -> {
+                parent.onThrowable(e);
+                return null;
             });
         }
 
         protected void doFinally() throws Exception {
-            postToUiThreadAndWait(new Callable<Object>() {
-                public Object call() throws Exception {
-                    parent.onFinally();
-                    return null;
-                }
+            postToUiThreadAndWait(() -> {
+                parent.onFinally();
+                return null;
             });
         }
 
@@ -281,15 +271,13 @@ public abstract class SafeAsyncTask<ResultT> implements Callable<ResultT> {
             // for it to complete.
             // If it throws an exception, capture that exception
             // and rethrow it later.
-            handler.post(new Runnable() {
-                public void run() {
-                    try {
-                        c.call();
-                    } catch (Exception e) {
-                        exceptions[0] = e;
-                    } finally {
-                        latch.countDown();
-                    }
+            handler.post(() -> {
+                try {
+                    c.call();
+                } catch (Exception e) {
+                    exceptions[0] = e;
+                } finally {
+                    latch.countDown();
                 }
             });
 

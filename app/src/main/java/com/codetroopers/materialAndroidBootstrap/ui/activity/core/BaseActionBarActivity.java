@@ -3,6 +3,7 @@ package com.codetroopers.materialAndroidBootstrap.ui.activity.core;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.codetroopers.materialAndroidBootstrap.R;
@@ -13,7 +14,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import icepick.Icepick;
 
-public abstract class BaseActionBarActivity extends ActionBarActivity {
+public abstract class BaseActionBarActivity extends AppCompatActivity {
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;

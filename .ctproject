@@ -1,0 +1,6 @@
+# Generated for use with https://github.com/code-troopers/ct
+help='./gradlew tasks'
+
+testU='./gradlew testReleaseUnitTest'
+testIHM='./gradlew connectedAndroidTest' #You need a devices connected and awake
+

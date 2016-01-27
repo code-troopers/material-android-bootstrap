@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.codetroopers.materialAndroidBootstrap.R;
 
+import butterknife.ButterKnife;
 import timber.log.Timber;
 
 public class MenuItemUtil {
@@ -24,7 +25,7 @@ public class MenuItemUtil {
                     if (counter == 0) {
                         menuItemCounter.setVisibility(View.GONE);
                     } else {
-                        TextView counterTextView = (TextView) menuItemCounter.findViewById(R.id.counter);
+                        TextView counterTextView = ButterKnife.findById(menuItemCounter, R.id.counter);
                         menuItemCounter.setVisibility(View.VISIBLE);
                         counterTextView.setText(Integer.toString(counter));
                     }

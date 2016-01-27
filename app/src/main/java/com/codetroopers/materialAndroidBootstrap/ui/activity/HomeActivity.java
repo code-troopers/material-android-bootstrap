@@ -3,11 +3,11 @@ package com.codetroopers.materialAndroidBootstrap.ui.activity;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,21 +27,23 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import hugo.weaving.DebugLog;
+import icepick.Icepick;
 import icepick.State;
 import timber.log.Timber;
 
 import static java.lang.String.format;
 
 @DebugLog
-public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter.OnItemClickListener, HasComponent<HomeActivityComponent> {
+public class HomeActivity extends BaseActionBarActivity implements
+        DrawerLayout.DrawerListener,
+        NavigationView.OnNavigationItemSelectedListener, HasComponent<HomeActivityComponent> {
 
     private HomeActivityComponent component;
 
     @Bind(R.id.drawer)
     DrawerLayout mDrawer;
-    @Bind(R.id.left_drawer)
-    RecyclerView mDrawerList;
-
+    @Bind(R.id.navigation_view)
+    NavigationView mNavigationView;
     @Bind(R.id.content)
     TextView tvContent;
 
@@ -50,9 +52,12 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
 
     @State
     DummyContent dummyContent;
-
+    @State
+    @IdRes
+    int mCurrentMenuItem;
+    @State
+    boolean mCurrentMenuItemChanged;
     private ActionBarDrawerToggle mDrawerToggle;
-    private DrawerAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,37 +80,29 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
                 Strings.namedFormat("INCREMENTAL = $incremental",
                         "incremental", Build.VERSION.INCREMENTAL)));
 
-        setupDrawer();
 
-        if (dummyContent == null) {
-            dummyContent = dummyContentFactory.getDummyContent();
+        if (savedInstanceState == null) {
+            mCurrentMenuItem = R.id.nav_drawer_menu_1;
+            if (dummyContent == null) {
+                dummyContent = dummyContentFactory.getDummyContent();
+            }
+            tvContent.setText(format("[%s] %s", dummyContent.creationDate(), dummyContent.content()));
+        } else {
+            Icepick.restoreInstanceState(this, savedInstanceState);
         }
-        tvContent.setText(format("[%s] %s", dummyContent.creationDate(), dummyContent.content()));
+        setupDrawer();
     }
 
     private void setupDrawer() {
-        mAdapter = new DrawerAdapter(this);
+        mDrawer.setDrawerListener(this);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, R.string.drawer_open, R.string.drawer_close);
 
-        mDrawerList.setAdapter(mAdapter);
-        // improve performance by indicating the list if fixed size.
-        mDrawerList.setHasFixedSize(true);
-        mDrawerList.setLayoutManager(new LinearLayoutManager(this));
-        mDrawer.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        mDrawer.setStatusBarBackground(R.color.statusBarTransparentColor);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, getToolbar(), R.string.drawer_open, R.string.drawer_close) {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                invalidateOptionsMenu();
-            }
+        mDrawerToggle.syncState();
+        mNavigationView.setNavigationItemSelectedListener(this);
 
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-                invalidateOptionsMenu();
-            }
-        };
-        mDrawer.setDrawerListener(mDrawerToggle);
+        MenuItem firstItem = mNavigationView.getMenu().findItem(mCurrentMenuItem);
+        firstItem.setCheckable(true);
+        firstItem.setChecked(true);
     }
 
     @Override
@@ -133,11 +130,60 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content view
-        boolean drawerOpen = mDrawer.isDrawerOpen(mDrawerList);
-        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
-        return super.onPrepareOptionsMenu(menu);
+    public HomeActivityComponent getComponent() {
+        return component;
+    }
+
+    private void selectItem(int position) {
+        mDrawer.closeDrawer(mNavigationView);
+    }
+
+    @Override
+    public void onDrawerSlide(View drawerView, float slideOffset) {
+        mDrawerToggle.onDrawerSlide(drawerView, slideOffset);
+    }
+
+    @Override
+    public void onDrawerOpened(View drawerView) {
+        mDrawerToggle.onDrawerOpened(drawerView);
+    }
+
+    @Override
+    public void onDrawerClosed(View drawerView) {
+        mDrawerToggle.onDrawerClosed(drawerView);
+
+        if (mCurrentMenuItemChanged) {
+            switch (mCurrentMenuItem) {
+                //Do fragment replacement
+                default:
+            }
+            mCurrentMenuItemChanged = false;
+        }
+    }
+
+    @Override
+    public void onDrawerStateChanged(int newState) {
+        mDrawerToggle.onDrawerStateChanged(newState);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        @IdRes int id = menuItem.getItemId();
+        if (id == mCurrentMenuItem) {
+            mCurrentMenuItemChanged = false;
+        } else {
+            selectNewMenuItem(menuItem);
+        }
+        mDrawer.closeDrawers();
+        return false;
+    }
+
+    private void selectNewMenuItem(MenuItem menuItem) {
+        mCurrentMenuItemChanged = true;
+        menuItem.setCheckable(true);
+        menuItem.setChecked(true);
+        mNavigationView.getMenu().findItem(mCurrentMenuItem).setChecked(false);
+        mCurrentMenuItem = menuItem.getItemId();
     }
 
     @Override
@@ -156,17 +202,11 @@ public class HomeActivity extends BaseActionBarActivity implements DrawerAdapter
     }
 
     @Override
-    public void onClick(View view, int position) {
-        selectItem(position);
-    }
-
-    @Override
-    public HomeActivityComponent getComponent() {
-        return component;
-    }
-
-    private void selectItem(int position) {
-        mDrawer.closeDrawer(mDrawerList);
-        mAdapter.setActive(position);
+    public void onBackPressed() {
+        if (mDrawer.isDrawerOpen(mNavigationView)) {
+            mDrawer.closeDrawers();
+        } else {
+            //Do fragement replacement or close activity/app
+        }
     }
 }

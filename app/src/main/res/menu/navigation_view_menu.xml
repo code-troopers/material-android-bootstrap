@@ -13,11 +13,13 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/nav_drawer_menu_1"
         android:icon="@drawable/ic_drawer"
+        app:actionLayout="@layout/menu_counter"
         android:title="menu_1"/>
 
     <item

@@ -20,6 +20,7 @@ import com.codetroopers.materialAndroidBootstrap.core.components.HomeActivityCom
 import com.codetroopers.materialAndroidBootstrap.example.DummyContent;
 import com.codetroopers.materialAndroidBootstrap.example.DummyContentFactory;
 import com.codetroopers.materialAndroidBootstrap.ui.activity.core.BaseActionBarActivity;
+import com.codetroopers.materialAndroidBootstrap.util.MenuItemUtil;
 import com.codetroopers.materialAndroidBootstrap.util.Strings;
 import com.codetroopers.materialAndroidBootstrap.util.UIUtils;
 
@@ -99,7 +100,10 @@ public class HomeActivity extends BaseActionBarActivity implements
         MenuItem firstItem = mNavigationView.getMenu().findItem(mCurrentMenuItem);
         firstItem.setCheckable(true);
         firstItem.setChecked(true);
+
+        MenuItemUtil.setItemCounter(mNavigationView, R.id.nav_drawer_menu_1, 12);
     }
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {

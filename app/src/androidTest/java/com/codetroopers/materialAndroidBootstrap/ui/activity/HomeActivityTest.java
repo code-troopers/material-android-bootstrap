@@ -76,17 +76,17 @@ public class HomeActivityTest extends RecreateActivityTest<HomeActivity> {
     public void testHomeActivity_exampleOpenMenu() {
         rule.launchActivity(null);
 
-        onView(withText("menu 0"))
+        onView(withText("menu_1"))
                 .check(matches(not(isDisplayed())));
 
         onView(withId(R.id.drawer))
                 .perform(open());
-        onView(withText("menu 0"))
+        onView(withText("menu_1"))
                 .check(matches(isDisplayed()));
 
         onView(withId(R.id.drawer))
                 .perform(close());
-        onView(withText("menu 0"))
+        onView(withText("menu_1"))
                 .check(matches(not(isDisplayed())));
     }
 

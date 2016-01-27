@@ -21,15 +21,12 @@
         android:title="menu_1"/>
 
     <item
-        android:id="@+id/nav_drawer_menu_2"
         android:icon="@drawable/ic_drawer"
         android:title="menu_2"/>
     <item
-        android:id="@+id/nav_drawer_menu_3"
         android:icon="@drawable/ic_drawer"
         android:title="menu_3"/>
     <item
-        android:id="@+id/nav_drawer_menu_4"
         android:icon="@drawable/ic_drawer"
         android:title="menu_4"/>
 </menu>

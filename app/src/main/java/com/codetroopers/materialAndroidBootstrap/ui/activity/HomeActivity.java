@@ -130,10 +130,6 @@ public class HomeActivity extends BaseActionBarActivity implements
         return component;
     }
 
-    private void selectItem(int position) {
-        mDrawer.closeDrawer(mNavigationView);
-    }
-
     @Override
     public void onDrawerSlide(View drawerView, float slideOffset) {
         mDrawerToggle.onDrawerSlide(drawerView, slideOffset);

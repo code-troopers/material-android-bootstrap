@@ -7,7 +7,7 @@ import com.codetroopers.materialAndroidBootstrap.core.modules.HomeActivityModule
 import com.codetroopers.materialAndroidBootstrap.ui.activity.HomeActivity;
 
 public class ComponentsFactory {
-    public static ComponentsFactory INSTANCE = null;
+    private static ComponentsFactory INSTANCE = null;
 
     public static ComponentsFactory get() {
         if (INSTANCE == null) {

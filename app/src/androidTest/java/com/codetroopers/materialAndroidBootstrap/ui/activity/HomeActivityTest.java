@@ -56,7 +56,7 @@ public class HomeActivityTest extends RecreateActivityTest<HomeActivity> {
     }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         DummyContent stubContent = DummyContent.create("Hello World from test!", new Date());
         when(mockDummyContentFactory.getDummyContent()).thenReturn(stubContent);
     }

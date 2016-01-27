@@ -5,6 +5,4 @@
 
     <!-- Drawer dimensions -->
     <dimen name="drawer_ic_size">24dp</dimen>
-    <dimen name="drawer_width">260dp</dimen>
-    <dimen name="drawer_ic_padding">32dp</dimen>
 </resources>

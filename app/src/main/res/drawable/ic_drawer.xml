@@ -3,6 +3,6 @@
     android:shape="oval">
     <size
         android:width="@dimen/drawer_ic_size"
-        android:height="@dimen/drawer_ic_size"></size>
-    <solid android:color="@color/colorPrimaryDark"></solid>
+        android:height="@dimen/drawer_ic_size" />
+    <solid android:color="@color/colorPrimaryDark" />
 </shape>

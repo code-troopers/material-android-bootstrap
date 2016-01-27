@@ -2,7 +2,7 @@ package com.codetroopers.materialAndroidBootstrap.ui.activity.core;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -30,7 +30,10 @@ public abstract class BaseActionBarActivity extends AppCompatActivity {
                 mToolbar.setElevation(getResources().getDimensionPixelSize(R.dimen.action_bar_elevation));
             }
             setSupportActionBar(mToolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            final ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
         }
     }
 

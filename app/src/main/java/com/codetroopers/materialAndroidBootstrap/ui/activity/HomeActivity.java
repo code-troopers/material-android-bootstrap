@@ -27,7 +27,6 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import hugo.weaving.DebugLog;
-import icepick.Icepick;
 import icepick.State;
 import timber.log.Timber;
 
@@ -80,17 +79,14 @@ public class HomeActivity extends BaseActionBarActivity implements
                 Strings.namedFormat("INCREMENTAL = $incremental",
                         "incremental", Build.VERSION.INCREMENTAL)));
 
-
         if (savedInstanceState == null) {
             mCurrentMenuItem = R.id.nav_drawer_menu_1;
-            if (dummyContent == null) {
-                dummyContent = dummyContentFactory.getDummyContent();
-            }
-            tvContent.setText(format("[%s] %s", dummyContent.creationDate(), dummyContent.content()));
-        } else {
-            Icepick.restoreInstanceState(this, savedInstanceState);
         }
         setupDrawer();
+        if (dummyContent == null) {
+            dummyContent = dummyContentFactory.getDummyContent();
+        }
+        tvContent.setText(format("[%s] %s", dummyContent.creationDate(), dummyContent.content()));
     }
 
     private void setupDrawer() {

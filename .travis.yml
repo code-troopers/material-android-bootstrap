@@ -25,7 +25,7 @@ android:
     - extra-android-m2repository
 
     # devices
-    - sys-img-armeabi-v7a-android-23
+    - sys-img-armeabi-v7a-android-21
 
 jdk: oraclejdk8
 

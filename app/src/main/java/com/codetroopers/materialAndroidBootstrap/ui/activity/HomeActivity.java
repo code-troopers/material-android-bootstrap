@@ -101,7 +101,7 @@ public class HomeActivity extends BaseActionBarActivity implements
         firstItem.setCheckable(true);
         firstItem.setChecked(true);
 
-        MenuItemUtil.setItemCounter(mNavigationView, R.id.nav_drawer_menu_1, 12);
+        MenuItemUtil.setItemCounter(mNavigationView, R.id.nav_drawer_menu_1, 11);
     }
 
 

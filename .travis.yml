@@ -1,0 +1,38 @@
+# Use container based builds
+sudo: false
+
+script: ./gradlew build testReleaseUnitTest connectedAndroidTest
+
+# Lang type
+language: android
+
+#- echo yes | android update sdk -a -t tools,platform-tools,extra-android-support,extra-android-m2repository,android-19,build-tools-19.1.0,extra-google-google_play_services,extra-google-m2repository --force --no-ui
+
+android:
+  components:
+    # latest version of the tools
+    - tools
+    - platform-tools
+
+    # build tools version
+    - build-tools-23.0.2
+
+    # The SDK Version
+    - android-23
+
+    # Additional components
+    - extra-google-m2repository
+    - extra-android-m2repository
+
+jdk: oraclejdk8
+
+before_install:
+  # required libs for android build tools
+  # - sudo apt-get update
+  # - sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch
+  # Don't really need this (NDK stuff) for Android Bootstrap, but figured I'd leave it here for anyone who forks it. :)
+  # newest Android NDK
+  #- if [ `uname -m` = x86_64]; then wget http://dl.google.com/android/ndk/android-ndk-r9c-linux-x86_64.tar.bz2 -O ndk.tgz; else wget http://dl.google.com/android/ndk/android-ndk-r9c-linux-x86.tar.bz2 -O ndk.tgz; fi
+  #- tar -xf ndk.tgz
+  #- export ANDROID_NDK_HOME=`pwd`/android-ndk-r9c
+  #- export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_NDK_HOME}

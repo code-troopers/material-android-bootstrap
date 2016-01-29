@@ -1,4 +1,4 @@
-## Material Android Bootstrap
+## Material Android Bootstrap [![Build Status](https://travis-ci.org/code-troopers/material-android-bootstrap.svg?branch=master)](https://travis-ci.org/code-troopers/material-android-bootstrap)
 
 This is a bootstrap to rapidly launch Android projects on API>14 with a material theme
 

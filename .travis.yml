@@ -1,11 +1,8 @@
-# Use container based builds
-sudo: false
-
 language: android
 jdk: oraclejdk8
 env:
   matrix:
-   - ANDROID_TARGET=android-21  ANDROID_ABI=armeabi-v7a
+   - ANDROID_TARGET=android-19  ANDROID_ABI=armeabi-v7a
 
 cache:
   directories:
@@ -17,11 +14,11 @@ android:
   components:
     - tools
     - platform-tools
-    - build-tools-23.0.2
-    - android-23
+    - build-tools-22.0.1
+    - android-20
     - extra-google-m2repository
     - extra-android-m2repository
-    - sys-img-armeabi-v7a-android-21
+    - sys-img-armeabi-v7a-android-19
 
 #notifications:
 #  email:

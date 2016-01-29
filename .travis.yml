@@ -1,35 +1,27 @@
 # Use container based builds
 sudo: false
 
-script: ./gradlew build testReleaseUnitTest connectedAndroidTest
-
-# Lang type
 language: android
+jdk: oraclejdk8
+env:
+  matrix:
+   - ANDROID_TARGET=android-22  ANDROID_ABI=armeabi-v7a
 
-#- echo yes | android update sdk -a -t tools,platform-tools,extra-android-support,extra-android-m2repository,android-19,build-tools-19.1.0,extra-google-google_play_services,extra-google-m2repository --force --no-ui
+cache:
+  directories:
+  - /usr/local/android-sdk/
+  - ~/.gradle/wrapper
+  - ~/.gradle/caches
 
 android:
   components:
-    # latest version of the tools
     - tools
     - platform-tools
-
-    # build tools version
     - build-tools-23.0.2
-
-    # The SDK Version
     - android-23
-
-    # Additional components
     - extra-google-m2repository
     - extra-android-m2repository
-
-    # devices
-    - sys-img-armeabi-v7a-android-21
-
-jdk:
-    - oraclejdk7
-    - oraclejdk8
+    - sys-img-armeabi-v7a-android-22
 
 #notifications:
 #  email:
@@ -37,10 +29,15 @@ jdk:
 
 # Emulator Management: Create, Start and Wait
 before_script:
-    - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
-    - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
-    - export JAVA_HOME=$JAVA7_HOME
-    - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
-    - emulator -avd test -no-audio -no-window &
-    - android-wait-for-emulator
-    - adb shell input keyevent 82 &
+  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+
+# https://github.com/orfjackal/retrolambda/issues/37#issuecomment-114092779
+script:
+  - ./gradlew prepareDebugDependencies
+  - ./gradlew clean
+  - ./gradlew assembleDebug
+  - ./gradlew testReleaseUnitTest --info
+  - ./gradlew connectedAndroidTest --info

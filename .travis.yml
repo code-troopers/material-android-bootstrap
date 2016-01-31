@@ -19,6 +19,7 @@ android:
     - android-23
     - extra-google-m2repository
     - extra-android-m2repository
+    - addon
     - sys-img-armeabi-v7a-android-21
 
 #notifications:

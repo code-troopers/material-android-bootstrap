@@ -1,3 +1,4 @@
+sudo: false
 language: android
 jdk: oraclejdk8
 env:
@@ -17,6 +18,7 @@ android:
     - build-tools-23.0.2
     - android-23
     - extra-google-m2repository
+    - extra-android-support
     - extra-android-m2repository
     - sys-img-armeabi-v7a-android-19
 

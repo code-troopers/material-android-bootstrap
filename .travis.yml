@@ -36,5 +36,5 @@ script:
   - ./gradlew prepareDebugDependencies
   - ./gradlew clean
   - ./gradlew assembleDebug
-  - ./gradlew testReleaseUnitTest --info
-  - ./gradlew connectedAndroidTest --info
+  - ./gradlew testReleaseUnitTest --info --stacktrace
+  - ./gradlew connectedAndroidTest --info --stacktrace

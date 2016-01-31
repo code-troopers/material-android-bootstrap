@@ -3,33 +3,40 @@ language: android
 jdk: oraclejdk8
 env:
   matrix:
-  - ANDROID_TARGET=android-21  ANDROID_ABI=armeabi-v7a
+   - ANDROID_TARGET=android-21  ANDROID_ABI=armeabi-v7a
+
 cache:
   directories:
-  - "/usr/local/android-sdk/"
-  - "~/.gradle/wrapper"
-  - "~/.gradle/caches"
+  - /usr/local/android-sdk/
+  - ~/.gradle/wrapper
+  - ~/.gradle/caches
+
 android:
   components:
-  - tools
-  - platform-tools
-  - build-tools-23.0.2
-  - android-23
-  - extra-google-m2repository
-  - extra-android-m2repository
-  - addon
-  - sys-img-armeabi-v7a-android-21
-notifications:
-  slack:
-    secure: XZxRbkYe4Wc4rAW43VqvwJ87MkcWR+As5TH2at6gaRzwrHK0iMa86WjeeqSXL65QUVoXeDrGVBbjQL0fr6lPE0SZoUWG8P1prye8Em/oYS5SKS4GapcHL4ivExs3w2aCZ5izzru9v+Dq6yJX7OALAWMi68i4wJIE7HNSk74VlIA=
+    - tools
+    - platform-tools
+    - build-tools-23.0.2
+    - android-23
+    - extra-google-m2repository
+    - extra-android-m2repository
+    - addon
+    - sys-img-armeabi-v7a-android-21
+
+#notifications:
+#  email:
+#    - dev@code-troopers.com
+
+# Emulator Management: Create, Start and Wait
 before_script:
-- echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
-- emulator -avd test -no-skin -no-audio -no-window &
-- android-wait-for-emulator
-- adb shell input keyevent 82 &
+  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+
+# https://github.com/orfjackal/retrolambda/issues/37#issuecomment-114092779
 script:
-- "./gradlew prepareDebugDependencies"
-- "./gradlew clean"
-- "./gradlew assembleDebug"
-- "./gradlew testReleaseUnitTest --info --stacktrace"
-- "./gradlew connectedAndroidTest --info --stacktrace"
+  - ./gradlew prepareDebugDependencies
+  - ./gradlew clean
+  - ./gradlew assembleDebug
+  - ./gradlew testReleaseUnitTest --info --stacktrace
+  - ./gradlew connectedAndroidTest --info --stacktrace

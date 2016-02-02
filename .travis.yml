@@ -16,5 +16,5 @@ android:
 #  slack:
 #    secure: EZmgsKvfR5+Hhrx5EOECnLeaOGC76FIRgXJ7oZlAdGtqqArRk1OMFlRT9cDFK3868LBGZGOELpL9OLbTgbcDJgAgRou5GetVUKhUGc8Q7wBoLEvBmqjxI8vjKur33MyzdxAvMzMT0nQuwA5hjXdENiytmDJnCgr4UpVQ251eKPE=
 script:
-  - ./gradlew clean assembleDebug testReleaseUnitTest --info
-#- ./gradlew connectedAndroidTest --info
+  - ./gradlew clean assembleDebug testReleaseUnitTest --debug
+#- ./gradlew connectedAndroidTest

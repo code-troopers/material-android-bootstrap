@@ -8,8 +8,6 @@ apply plugin: 'me.tatarka.retrolambda'
 
 sdkManager {
     minSdkToolsVersion '24.4.1'
-    emulatorVersion 'android-21'
-    emulatorArchitecture 'armeabi-v7a'
 }
 
 android {

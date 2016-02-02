@@ -8,7 +8,7 @@ cache:
     - "~/.gradle/caches"
 android:
   components:
-    - extra-google-m2repository
+    - extra-android-support
 #  - sys-img-armeabi-v7a-android-21
 #notifications:
 #  slack:

@@ -1,11 +1,13 @@
 sudo: false
 language: android
 jdk: oraclejdk8
+
+before_cache:
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 cache:
   directories:
-    - "/usr/local/android-sdk/"
-    - "~/.gradle/wrapper"
-    - "~/.gradle/caches"
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
 android:
   components:
 #    - extra-android-support

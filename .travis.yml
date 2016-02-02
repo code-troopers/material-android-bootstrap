@@ -14,7 +14,7 @@ android:
   - sys-img-armeabi-v7a-android-21
 notifications:
   slack:
-    secure: NqbNEOURi3QBvLWN4qyFdLCyYPGhI2vwqBaXKKhsjPDaBj6AIIFk3h2lBrebaCQjXkmIC616irm5zFZD2Ri7hi9kquqENtWbOU2tnzTtt2KR0/Off+Unoy0JfY15kCiwrfLI/WjUnrCK9YxlWF6RP2uCsR/jD0F8rhNTtnawLYU=
+    secure: I829m6rhqXW4/HRXiXiIFljqMuN00n/uY/O9HkyQETAOnJ/rSFi1fv5UH9faFU/TQD2FHRRxUKCwF41hyvX398Fpoeu5ULO6CgAYxA8oahuc5ck0KQsFJh1jxmQgfJvlXyLUqfo8mM+HwohRDF7IoNAdzjo3/8U3uHKA3Hl0CW8=
 before_script:
 - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
 - emulator -avd test -no-skin -no-audio -no-window &

@@ -11,10 +11,14 @@ cache:
 android:
   components:
     - extra-android-m2repository
-#  - sys-img-armeabi-v7a-android-21
+    - sys-img-armeabi-v7a-android-21
+script:
+  - ./gradlew clean assembleDebug testReleaseUnitTest connectedAndroidTest --info
+before_script:
+  - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
+  - emulator -avd test -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
 #notifications:
 #  slack:
 #    secure: EZmgsKvfR5+Hhrx5EOECnLeaOGC76FIRgXJ7oZlAdGtqqArRk1OMFlRT9cDFK3868LBGZGOELpL9OLbTgbcDJgAgRou5GetVUKhUGc8Q7wBoLEvBmqjxI8vjKur33MyzdxAvMzMT0nQuwA5hjXdENiytmDJnCgr4UpVQ251eKPE=
-script:
-  - ./gradlew clean assembleDebug testReleaseUnitTest --debug
-#- ./gradlew connectedAndroidTest

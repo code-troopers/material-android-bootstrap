@@ -5,6 +5,7 @@ buildscript {
         jcenter()
         mavenCentral()
         maven {url "https://clojars.org/repo/"}
+        maven { url 'https://jitpack.io' }
         //Uncomment to add crashlytics
         //maven { url 'https://maven.fabric.io/public' }
     }
@@ -13,6 +14,10 @@ buildscript {
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
         classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
         classpath 'me.tatarka:gradle-retrolambda:3.2.4'
+        // to auto install sdk components when building
+        // classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.+'
+        classpath 'com.github.plastiv:sdk-manager-plugin:b04aea1cddf87e78db9a4372794d678f9e568c48'
+
         //Uncomment to add crashlytics
         //classpath 'io.fabric.tools:gradle:1.14.4'
 

@@ -10,14 +10,13 @@ cache:
     - $HOME/.gradle/wrapper/
 android:
   components:
-#    - extra-android-support
     - extra-android-m2repository
 #  - sys-img-armeabi-v7a-android-21
 #notifications:
 #  slack:
 #    secure: EZmgsKvfR5+Hhrx5EOECnLeaOGC76FIRgXJ7oZlAdGtqqArRk1OMFlRT9cDFK3868LBGZGOELpL9OLbTgbcDJgAgRou5GetVUKhUGc8Q7wBoLEvBmqjxI8vjKur33MyzdxAvMzMT0nQuwA5hjXdENiytmDJnCgr4UpVQ251eKPE=
 script:
-  - "./gradlew clean"
-#- "./gradlew assembleDebug"
-#- "./gradlew testReleaseUnitTest --info --stacktrace"
-#- "./gradlew connectedAndroidTest --info --stacktrace"
+  - ./gradlew clean
+  - ./gradlew assembleDebug
+#- ./gradlew testReleaseUnitTest --info --stacktrace
+#- ./gradlew connectedAndroidTest --info --stacktrace

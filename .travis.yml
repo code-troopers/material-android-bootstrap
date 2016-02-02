@@ -1,9 +1,6 @@
 sudo: false
 language: android
 jdk: oraclejdk8
-env:
-  matrix:
-  - ANDROID_TARGET=android-21  ANDROID_ABI=armeabi-v7a
 cache:
   directories:
   - "/usr/local/android-sdk/"
@@ -14,14 +11,8 @@ android:
   - sys-img-armeabi-v7a-android-21
 notifications:
   slack:
-    secure: I829m6rhqXW4/HRXiXiIFljqMuN00n/uY/O9HkyQETAOnJ/rSFi1fv5UH9faFU/TQD2FHRRxUKCwF41hyvX398Fpoeu5ULO6CgAYxA8oahuc5ck0KQsFJh1jxmQgfJvlXyLUqfo8mM+HwohRDF7IoNAdzjo3/8U3uHKA3Hl0CW8=
-before_script:
-- echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
-- emulator -avd test -no-skin -no-audio -no-window &
-- android-wait-for-emulator
-- adb shell input keyevent 82 &
+    secure: EZmgsKvfR5+Hhrx5EOECnLeaOGC76FIRgXJ7oZlAdGtqqArRk1OMFlRT9cDFK3868LBGZGOELpL9OLbTgbcDJgAgRou5GetVUKhUGc8Q7wBoLEvBmqjxI8vjKur33MyzdxAvMzMT0nQuwA5hjXdENiytmDJnCgr4UpVQ251eKPE=
 script:
-- "./gradlew prepareDebugDependencies"
 - "./gradlew clean"
 - "./gradlew assembleDebug"
 - "./gradlew testReleaseUnitTest --info --stacktrace"

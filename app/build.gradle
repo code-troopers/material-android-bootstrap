@@ -52,7 +52,7 @@ android {
 }
 
 dependencies {
-    def daggerVersion = "2.0.1"
+    def daggerVersion = "2.0.2"
     def autoparcelVersion = "0.3.1"
     def dexmakerVersion = "1.4"
     def supportTestVersion = "0.4.1"

@@ -10,6 +10,7 @@ cache:
 android:
   components:
   - extra-android-m2repository
+  - extra-google-m2repository
   - sys-img-armeabi-v7a-android-19
 script:
 - "./gradlew clean assembleDebug testReleaseUnitTest connectedAndroidTest --info"
@@ -20,4 +21,4 @@ before_script:
 - adb shell input keyevent 82 &
 notifications:
   slack:
-    secure: GddtYvC/BG1vcq0R7VavoZUGH/mj59NB5jI+LNtegeRLeKwuZLE0w2x9FIfYFm9GJX9tLX76J0pWWiCvDSBVn1/3tmtEUykMqREUv5RxsSo9a6rfwgAzDCnxWBvMgQ7TO/98DZOw+vyz5caVvrSAoew+KfLsBq/JgVZJlPKsTFA=
+    secure: eC+rEJNvhBng/1xvRHqlwKTpZ+FGvgZsAE2N2ZDDE5FVuTXMqeu3TW3eyPTqCn53Ai8VDxf84o/HfhOLQIvoBzANPGq/JG4jbMYD8aWtMVOvAlMOLB+V/BJ+h3gUhl+rd/z/J+ioELIk+gup7rw7aUYZhqFnQdJwnuR5I4MJ2Hc=

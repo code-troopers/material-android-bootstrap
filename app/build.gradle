@@ -19,6 +19,11 @@ android {
         testFunctionalTest true
     }
     buildTypes {
+        debug {
+            versionNameSuffix ".debug"
+            applicationIdSuffix ".debug"
+            minifyEnabled false
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -34,12 +39,10 @@ android {
         exclude 'NOTICE'
         exclude 'META-INF/MANIFEST.MF'
     }
-
     //noinspection GroovyMissingReturnStatement
     lintOptions {
         disable 'InvalidPackage'
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

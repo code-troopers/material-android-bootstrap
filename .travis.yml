@@ -1,6 +1,9 @@
 sudo: false
 language: android
 jdk: oraclejdk8
+env:
+  matrix:
+  - ANDROID_TARGET=android-19  ANDROID_ABI=armeabi-v7a
 before_cache:
 - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 cache:
@@ -11,13 +14,13 @@ android:
   components:
   - extra-android-m2repository
   - sys-img-armeabi-v7a-android-19
-script:
-- "./gradlew clean assembleDebug testReleaseUnitTest connectedAndroidTest --info"
 before_script:
-- echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
+- echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
 - emulator -avd test -no-skin -no-audio -no-window &
 - android-wait-for-emulator
 - adb shell input keyevent 82 &
+script:
+- "./gradlew clean assembleDebug testReleaseUnitTest connectedAndroidTest --info --stacktrace"
 notifications:
   slack:
-    secure: GddtYvC/BG1vcq0R7VavoZUGH/mj59NB5jI+LNtegeRLeKwuZLE0w2x9FIfYFm9GJX9tLX76J0pWWiCvDSBVn1/3tmtEUykMqREUv5RxsSo9a6rfwgAzDCnxWBvMgQ7TO/98DZOw+vyz5caVvrSAoew+KfLsBq/JgVZJlPKsTFA=
+    secure: Mn5QIZySAWP46twZQJl0b73THWkAxtJd4fPtsrMEBQK4StN7f2fYwNT+bBHk3tAuviNc4M8f9pR/k7ITkQyvve/IOuq8dxef7I4t6tJ2ulU+91I36w4syeYOPdpolGJMS3Mu0FVs20Se7IG6uCdj+udZ9413CeQu1V/6KyeQShc=

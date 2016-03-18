@@ -11,6 +11,8 @@ import org.junit.Test;
 public abstract class RecreateActivityTest<T extends Activity> {
     @Rule
     public ActivityTestRule<T> rule;
+    @Rule
+    public WakeLockRule wakeLockRule = new WakeLockRule();
 
     protected RecreateActivityTest(Class<T> clazz) {
         rule = new ActivityTestRule<>(clazz, true, false);

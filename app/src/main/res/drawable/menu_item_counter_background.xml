@@ -4,6 +4,6 @@
     <size
         android:width="@dimen/drawer_ic_size"
         android:height="@dimen/drawer_ic_size" />
-    <solid android:color="?attr/colorPrimaryDark" />
+    <solid android:color="@color/colorPrimaryDark" />
     <corners android:radius="20dp" />
 </shape>

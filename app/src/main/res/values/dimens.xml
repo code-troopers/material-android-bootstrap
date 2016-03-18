@@ -5,4 +5,17 @@
 
     <!-- Drawer dimensions -->
     <dimen name="drawer_ic_size">24dp</dimen>
+
+
+    <dimen name="space_tiny">4dp</dimen>
+    <dimen name="space_small">8dp</dimen>
+    <dimen name="space_normal">16dp</dimen>
+    <dimen name="space_large">24dp</dimen>
+
+    <dimen name="text_tiny">11sp</dimen>
+    <dimen name="text_small">14sp</dimen>
+    <dimen name="text_normal">16sp</dimen>
+    <dimen name="text_medium">18sp</dimen>
+    <dimen name="text_large">24sp</dimen>
+
 </resources>

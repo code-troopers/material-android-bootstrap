@@ -19,10 +19,10 @@ public class IntentUtils {
     /**
      * @return false if no activity able to do is found
      */
-    public static boolean writeSMS(Context context, String targetNumber) {
+    public static boolean writeSMS(Context context, String targetNumber, String message) {
         Uri uri = Uri.parse("smsto:" + targetNumber);
         Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
-        intent.putExtra("sms_body", "hello by sms");
+        intent.putExtra("sms_body", message);
         return safeOpenIntent(context, intent);
     }
 
